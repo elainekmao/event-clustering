@@ -1,0 +1,483 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>WikiLeaks Event Detection</title>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="js/highcharts.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <body>
+        <div id="graph"></div>
+        <script>
+            var chart = null;
+            var autoTickInterval = null;
+            $(function () {
+              $('#graph').highcharts({
+                  chart: {
+                    backgroundColor: "#FFF",
+                    spacingTop: 24,
+                    style: {
+                      fontSize: 12,
+                      fontFamily: 'sans-serif',
+                      fontWeight: 300,
+                    }
+                  },
+                  navigation: {
+                    buttonOptions: {
+                      theme: {
+                        fill: '#333333',
+                        stroke: '#000',
+                        states: {
+                          hover: {
+                              fill: '#474747',
+                              stroke: '#333',
+                          },
+                          select: {
+                              fill: '#474747',
+                              stroke: '#333',
+                          }
+                        }
+                      }
+                    }
+                 },
+                  yAxis: {
+                    max: 19,
+                    title: {
+                      text: "Clusters",
+                      style: {
+                        color: "#AAA",
+                        fontWeight: 300,
+                      }
+                    },
+                    labels: {
+                      style: {
+                        color: "#999",
+                      }
+                    },
+                    gridLineColor: 'rgba(255, 255, 255, .1)'
+                  },
+                  xAxis: {
+                    tickColor: "#333", // hide ticks
+                    lineColor: "#333", // hide line
+                    allowDecimals: false,
+                    title: {
+                      text: "Time",
+                      style: {
+                        color: "#AAA",
+                        fontWeight: 300,
+                      }
+                    },
+                    labels: {
+                      style: {
+                        color: "#999",
+                      }
+                    }
+                  },
+                  title: {
+                    text: $('<div/>').html('WikiLeaks Cables').text(),
+                    style: {
+                      color: "#333",
+                      font: 'sans-serif',
+                      fontWeight: 300,
+                    }
+                  },
+                  legend: {
+                    enabled: false
+                  },
+                  credits: {
+                    href: "http://www.elainekmao.com",
+                    text: "http://www.elainekmao.com"
+                  },
+                  tooltip: {
+                    useHTML: true,
+                    formatter: function() {
+                        return [
+                                "<b>", this.point.id, "</b>", "<br>",
+                                this.point.title, "<br>", 
+                                "Rating: ", this.point.rating, "<br>", 
+                                "Votes: ", this.point.votes
+                               ].join("");
+                    }
+                  },
+                  plotOptions: {
+                    scatter: {
+                      cursor: 'pointer',
+                      point: {
+                        events: {
+                          click: function() {
+                            window.open(
+                              ["http://www.imdb.com/title/tt", this.options.imdb_id, "/"].join(""),
+                            '_blank');
+                          }
+                        }
+                      }
+                    }
+                  },
+                  series: {
+                  {
+                    type: "scatter",
+                    data: 
+                    [
+        {
+"x": -94972320,
+"y": 1,
+"id": 1,
+"title": $("<div/>").html("SUBJECT:  EXTENDED NATIONAL JURISDICTIONS OVER HIGH SEAS ").text(),
+}
+,
+{
+"x": 67858200,
+"y": 2,
+"id": 2,
+"title": $("<div/>").html("SUBJECT: ACCELERATION OF F-4ES FOR IRAN ").text(),
+}
+,
+{
+"x": 68967600,
+"y": 2,
+"id": 3,
+"title": $("<div/>").html("SUBJECT: TRIALS/EXECUTIONS OF ANTI-GOVERNMENT ELEMENTS: STUDENTS DEMONSTRATE AND SHAH LASHES OUT AT FOREIGN CRITICS ").text(),
+}
+,
+{
+"x": 82267200,
+"y": 2,
+"id": 4,
+"title": $("<div/>").html("SUBJECT: CONTINUING TERRORIST ACTIVITIES IN IRAN ").text(),
+}
+,
+{
+"x": 83323620,
+"y": 2,
+"id": 5,
+"title": $("<div/>").html("SUBJECT: CONTINUING TERRORIST VIOLENCE ").text(),
+}
+,
+{
+"x": 253371600,
+"y": 2,
+"id": 11,
+"title": $("<div/>").html("SUBJ: SERIOUS RELIGIOUS DISSIDENCE IN QOM ").text(),
+}
+,
+{
+"x": 102587640,
+"y": 3,
+"id": 6,
+"title": $("<div/>").html("SUBJECT: AUDIENCE WITH SHAH APRIL 5 ").text(),
+}
+,
+{
+"x": 118418400,
+"y": 3,
+"id": 7,
+"title": $("<div/>").html("SUBJECT: ASSASSINATION/KIDNAP PLOT AGAINST SHAH REVEALED ").text(),
+}
+,
+{
+"x": 122732400,
+"y": 3,
+"id": 8,
+"title": $("<div/>").html("SUBJECT: SHAH ON CORRUPTION ").text(),
+}
+,
+{
+"x": 163164300,
+"y": 3,
+"id": 9,
+"title": $("<div/>").html("SUBJECT: IRANIAN RESURGENCE PARTY CREATED BY SHAH ").text(),
+}
+,
+{
+"x": 185544300,
+"y": 4,
+"id": 10,
+"title": $("<div/>").html("SUBJ: KOREA AT 30TH UNGA: GABON ").text(),
+}
+,
+{
+"x": 263318460,
+"y": 5,
+"id": 12,
+"title": $("<div/>").html("SUBJECT: FIRST CONVERSATION WITH NEW AFGHAN PRESIDENT ").text(),
+}
+,
+{
+"x": 474022800,
+"y": 5,
+"id": 18,
+"title": $("<div/>").html("SUBJECT:  GOJ WHALING ").text(),
+}
+,
+{
+"x": 475997460,
+"y": 5,
+"id": 24,
+"title": $("<div/>").html("SUBJ: ECONOMIC POLICY PROFILE:  SOMALIA ").text(),
+}
+,
+{
+"x": 478765200,
+"y": 5,
+"id": 35,
+"title": $("<div/>").html("SUBJ:  BIG BUSINESS IS ROYAL BUSINESS IN BRUNEI ").text(),
+}
+,
+{
+"x": 303368280,
+"y": 6,
+"id": 13,
+"title": $("<div/>").html("SUBJECT: NEGOTIATIONS ").text(),
+}
+,
+{
+"x": 305794860,
+"y": 7,
+"id": 14,
+"title": $("<div/>").html("SUBJ: (c) TURKISH VIEWS ON KURDISH TROUBLES IN IRAN ").text(),
+}
+,
+{
+"x": 309614880,
+"y": 7,
+"id": 16,
+"title": $("<div/>").html("SUBJECT: SOVIET COMMENTS ON IRAN ").text(),
+}
+,
+{
+"x": 306416400,
+"y": 8,
+"id": 15,
+"title": $("<div/>").html("SUBJECT: PM BAZARGAN CRITICIZED ").text(),
+}
+,
+{
+"x": 309771120,
+"y": 8,
+"id": 17,
+"title": $("<div/>").html("SUBJECT: MODERATION:  DOES IT HAVE A CHANCE? ").text(),
+}
+,
+{
+"x": 479809380,
+"y": 8,
+"id": 41,
+"title": $("<div/>").html("SUBJECT:    THE IRANIAN SUCCESSION ").text(),
+}
+,
+{
+"x": 474132600,
+"y": 9,
+"id": 19,
+"title": $("<div/>").html("SUBJECT: BOTSWANA NEWSPAPER CARRIES ARTICLE MISREPRESENTING ").text(),
+}
+,
+{
+"x": 474199500,
+"y": 9,
+"id": 20,
+"title": $("<div/>").html("SUBJECT: ANGOLANS IN SADF SEEK REFUGE IN BOTSWANA ").text(),
+}
+,
+{
+"x": 476455500,
+"y": 9,
+"id": 27,
+"title": $("<div/>").html("SUBJECT: BOTSWANA CHARGES BOPHUTHATSWANA WITH THREAT TO INVADE ").text(),
+}
+,
+{
+"x": 474223320,
+"y": 10,
+"id": 21,
+"title": $("<div/>").html("SUBJECT:  CHRISTIAN CHURCHES BOMBED IN TRIPOLI ").text(),
+}
+,
+{
+"x": 474559500,
+"y": 10,
+"id": 22,
+"title": $("<div/>").html("SUBJECT:  BOMBS IN WEST BEIRUT ").text(),
+}
+,
+{
+"x": 476665080,
+"y": 10,
+"id": 28,
+"title": $("<div/>").html("SUBJECT:     INTERNATIONAL LINKS OF LARF ").text(),
+}
+,
+{
+"x": 480102720,
+"y": 10,
+"id": 47,
+"title": $("<div/>").html("SUBJECT: EVENING STANDARD ARTICLE ON US CAPTIVES IN ").text(),
+}
+,
+{
+"x": 474819240,
+"y": 11,
+"id": 23,
+"title": $("<div/>").html("SUBJECT:  DISSIDENT FARC GROUP ATTACKS COLOMBIAN ").text(),
+}
+,
+{
+"x": 476176080,
+"y": 12,
+"id": 25,
+"title": $("<div/>").html("SUBJECT:  RUMORS OF TENSIONS IN THE SOMALI REGIME ").text(),
+}
+,
+{
+"x": 476341320,
+"y": 13,
+"id": 26,
+"title": $("<div/>").html("SUBJ: LIBYAN ACTIVITY IN AFRICA: SOMALIA ").text(),
+}
+,
+{
+"x": 477060540,
+"y": 13,
+"id": 29,
+"title": $("<div/>").html("SUBJECT: REPORT OF SOMALI OVERTURE T0 SOVIETS ").text(),
+}
+,
+{
+"x": 477060540,
+"y": 13,
+"id": 30,
+"title": $("<div/>").html("SUBJECT:  REPORT OF SOMALI OVERTURE T0 SOVIETS ").text(),
+}
+,
+{
+"x": 477575940,
+"y": 14,
+"id": 31,
+"title": $("<div/>").html("SUBJECT: HIZBALLAH CALLS FOR ISLAMIC REPUBLIC IN LEBANON ").text(),
+}
+,
+{
+"x": 477664620,
+"y": 14,
+"id": 32,
+"title": $("<div/>").html("SUBJECT:  FURTHER ON HIZBALLAH "MANIFESTO" ").text(),
+}
+,
+{
+"x": 477667320,
+"y": 14,
+"id": 33,
+"title": $("<div/>").html("SUBJECT: HIZBALLAH ON THE MOVE ").text(),
+}
+,
+{
+"x": 478860360,
+"y": 14,
+"id": 36,
+"title": $("<div/>").html("SUBJECT:  HIZBALLAH "MANIFESTO" ").text(),
+}
+,
+{
+"x": 478279500,
+"y": 15,
+"id": 34,
+"title": $("<div/>").html("SUBJECT:  THE SYRIAN MUSLIM BROTHERHOOD ").text(),
+}
+,
+{
+"x": 479131680,
+"y": 15,
+"id": 37,
+"title": $("<div/>").html("SUBJECT:  GROWING DEBATE ON SHARIA LAW ").text(),
+}
+,
+{
+"x": 479751540,
+"y": 16,
+"id": 38,
+"title": $("<div/>").html("SUBJECT:  JA\'JA\'S "CHRISTIAN DECISION MOVEMENT" ").text(),
+}
+,
+{
+"x": 479756700,
+"y": 16,
+"id": 39,
+"title": $("<div/>").html("SUBJECT:  JA\'JA\'S MOVEMENT COMMUNIQUE ").text(),
+}
+,
+{
+"x": 479757120,
+"y": 16,
+"id": 40,
+"title": $("<div/>").html("SUBJECT:  JA\'JA\'S "CHRISTIAN DECISION MOVEMENT": ").text(),
+}
+,
+{
+"x": 481204200,
+"y": 16,
+"id": 50,
+"title": $("<div/>").html("SUBJECT:  FURTHER DETERIORATION IN SOUTH LEBANON ").text(),
+}
+{
+"x": 479829720,
+"y": 17,
+"id": 42,
+"title": $("<div/>").html("SUBJECT:  JORDAN\'S REFUGEE CAMPS:  ARAFAT SHINES AGAIN ").text(),
+}
+,
+{
+"x": 479833680,
+"y": 18,
+"id": 43,
+"title": $("<div/>").html("SUBJECT:  SYRIA RATTLES ITS SABER ").text(),
+}
+,
+{
+"x": 479904480,
+"y": 18,
+"id": 44,
+"title": $("<div/>").html("SUBJECT:  SYRIAN EXERTS PRESSURE ON LEBANESE ").text(),
+}
+,
+{
+"x": 480004200,
+"y": 18,
+"id": 45,
+"title": $("<div/>").html("SUBJECT:  CHRISTIAN DECISION MOVEMENT RESPONDS TO ").text(),
+}
+,
+{
+"x": 480018180,
+"y": 18,
+"id": 46,
+"title": $("<div/>").html("SUBJECT:  SOLVING THE CHRISTIAN CRISIS:  THE PHALANGE ").text(),
+}
+,
+{
+"x": 481019460,
+"y": 18,
+"id": 49,
+"title": $("<div/>").html("SUBJECT: JA\'JA\'-PHALANGE STALEMATE DRAGGING OUT ").text(),
+}
+,
+{
+"x": 480172020,
+"y": 19,
+"id": 48,
+"title": $("<div/>").html("SUBJECT:  FULL TEXT OF ISLAMIC JIHAD 17 MARCH STATEMENT ").text(),
+}
+]
+            marker: {
+                radius: 4,
+                symbol: "circle"
+        }
+            }
+            },
+            ]
+            }, function (retChar) {
+            chart = retChart;
+            autoTickInterval = chart.yAxis[0].tickInterval;
+            });
+            });
+            </script>

@@ -10,19 +10,10 @@ def main (document):
         docreader = csv.reader(csvfile, delimiter=',', quotechar='"')
         with open('temp.csv', 'wb') as f:
             tempwriter = csv.writer(f, delimiter=',')
-        #texts = []
             for row in docreader:
                 row[7] = tokenize_text(row[7])
                 tempwriter.writerow(row)
-                #tokens = tokenize_text(row[7])
-                #texts.append(tokens)
             print "Done"
-        #all_tokens = sum(texts, [])
-        #tokens_once = set(word for word in set(all_tokens) if all_tokens.count(word) == 1)
-        #texts = [[word for word in text if word not in tokens_once] for text in texts]
-        #dictionary = corpora.Dictionary(texts)
-        #dictionary.save('/tmp/cables.dict')
-        #print dictionary
 
 def tokenize_text (text):
     lowercase_text = text.lower()

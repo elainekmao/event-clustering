@@ -1,0 +1,4382 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>WikiLeaks Event Detection</title>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="js/highcharts.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <body>
+        <div id="graph"></div>
+        <script>
+            var chart = null;
+            var autoTickInterval = null;
+            $(function () {
+              $('#graph').highcharts({
+                  chart: {
+                    backgroundColor: "#FFF",
+                    spacingTop: 24,
+                    zoomType: "x",
+                    style: {
+                      fontSize: 12,
+                      fontFamily: 'sans-serif',
+                      fontWeight: 300,
+                    }
+                  },
+                  navigation: {
+                    buttonOptions: {
+                      theme: {
+                        fill: '#333333',
+                        stroke: '#000',
+                        states: {
+                          hover: {
+                              fill: '#474747',
+                              stroke: '#333',
+                          },
+                          select: {
+                              fill: '#474747',
+                              stroke: '#333',
+                          }
+                        }
+                      }
+                    }
+                 },
+                  yAxis: {
+                    min: 0,
+                    max: 126,
+                    title: {
+                      text: "Clusters",
+                      style: {
+                        color: "#AAA",
+                        fontWeight: 300,
+                      }
+                    },
+                    labels: {
+                      style: {
+                        color: "#999",
+                      }
+                    },
+                    gridLineColor: 'rgba(255, 255, 255, .1)'
+                  },
+                  xAxis: {
+                    type: "datetime",
+                    title: {
+                      text: "Time",
+                      style: {
+                        color: "#AAA",
+                        fontWeight: 300,
+                      }
+                    },
+                    labels: {
+                      style: {
+                        color: "#999",
+                      }
+                    }
+                  },
+                  title: {
+                    text: $('<div/>').html('WikiLeaks Cables').text(),
+                    style: {
+                      color: "#333",
+                      font: 'sans-serif',
+                      fontWeight: 300,
+                    }
+                  },
+                  legend: {
+                    enabled: false
+                  },
+                  credits: {
+                    href: "http://www.elainekmao.com",
+                    text: "http://www.elainekmao.com"
+                  },
+                  tooltip: {
+                    useHTML: true,
+                    formatter: function() {
+                        return [
+                                "<b>", this.point.id, "</b>", "<br>",
+                                this.point.title, "<br>", 
+                                "Cluster: ", this.point.y, "<br>", 
+                                "Date: ", Highcharts.dateFormat("%B %e %Y", this.point.x)
+                               ].join("");
+                    }
+                  },
+                  plotOptions: {
+                    scatter: {
+                      cursor: 'pointer',
+                      point: {
+                        events: {
+                          click: function() {
+                            window.open(
+                              [this.options.id, ".html"].join(""),
+                            '_blank');
+                          }
+                        }
+                      }
+                    }
+                  },
+                  series: [
+        
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1966, 12, 28),
+"y": 1,
+"id": 1,
+"title": $("<div/>").html("SUBJECT:  EXTENDED NATIONAL JURISDICTIONS OVER HIGH SEAS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1972, 2, 25),
+"y": 2,
+"id": 2,
+"title": $("<div/>").html("SUBJECT: ACCELERATION OF F-4ES FOR IRAN ").text(),
+},
+{
+"x": Date.UTC(1972, 3, 9),
+"y": 2,
+"id": 3,
+"title": $("<div/>").html("SUBJECT: TRIALS/EXECUTIONS OF ANTI-GOVERNMENT ELEMENTS: STUDENTS DEMONSTRATE AND SHAH LASHES OUT AT FOREIGN CRITICS ").text(),
+},
+{
+"x": Date.UTC(1972, 8, 10),
+"y": 2,
+"id": 4,
+"title": $("<div/>").html("SUBJECT: CONTINUING TERRORIST ACTIVITIES IN IRAN ").text(),
+},
+{
+"x": Date.UTC(1972, 8, 22),
+"y": 2,
+"id": 5,
+"title": $("<div/>").html("SUBJECT: CONTINUING TERRORIST VIOLENCE ").text(),
+},
+{
+"x": Date.UTC(1973, 4, 2),
+"y": 2,
+"id": 6,
+"title": $("<div/>").html("SUBJECT: AUDIENCE WITH SHAH APRIL 5 ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1973, 10, 2),
+"y": 3,
+"id": 7,
+"title": $("<div/>").html("SUBJECT: ASSASSINATION/KIDNAP PLOT AGAINST SHAH REVEALED ").text(),
+},
+{
+"x": Date.UTC(1973, 11, 21),
+"y": 3,
+"id": 8,
+"title": $("<div/>").html("SUBJECT: SHAH ON CORRUPTION ").text(),
+},
+{
+"x": Date.UTC(1975, 3, 4),
+"y": 3,
+"id": 9,
+"title": $("<div/>").html("SUBJECT: IRANIAN RESURGENCE PARTY CREATED BY SHAH ").text(),
+},
+{
+"x": Date.UTC(1978, 1, 11),
+"y": 3,
+"id": 11,
+"title": $("<div/>").html("SUBJ: SERIOUS RELIGIOUS DISSIDENCE IN QOM ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1975, 11, 18),
+"y": 4,
+"id": 10,
+"title": $("<div/>").html("SUBJ: KOREA AT 30TH UNGA: GABON ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1978, 5, 6),
+"y": 5,
+"id": 12,
+"title": $("<div/>").html("SUBJECT: FIRST CONVERSATION WITH NEW AFGHAN PRESIDENT ").text(),
+},
+{
+"x": Date.UTC(1985, 4, 23),
+"y": 5,
+"id": 57,
+"title": $("<div/>").html("SUBJECT:  PAKISTAN SEES SIGNS OF UPTURN IN IRAN-SOVIET ").text(),
+},
+{
+"x": Date.UTC(1985, 7, 1),
+"y": 5,
+"id": 80,
+"title": $("<div/>").html("SUBJECT:  (C) DEVELOPMENTS IN IRAN:  A SOVIET VIEW ").text(),
+},
+{
+"x": Date.UTC(1987, 9, 21),
+"y": 5,
+"id": 172,
+"title": $("<div/>").html("SUBJECT:  AFGHANS SELL US STINGERS TO KHOMEINI ").text(),
+},
+{
+"x": Date.UTC(1989, 6, 5),
+"y": 5,
+"id": 283,
+"title": $("<div/>").html("SUBJ:  SOVIET ARMS SALES TO IRAN ").text(),
+},
+{
+"x": Date.UTC(1989, 6, 7),
+"y": 5,
+"id": 285,
+"title": $("<div/>").html("SUBJECT: SOVIET REACTION TO KHOMEINI\'S DEATH ").text(),
+},
+{
+"x": Date.UTC(1989, 6, 8),
+"y": 5,
+"id": 286,
+"title": $("<div/>").html("SUBJECT:  POSSIBLE SOVIET ARMS SALES TO IRAN ").text(),
+},
+{
+"x": Date.UTC(1989, 11, 13),
+"y": 5,
+"id": 304,
+"title": $("<div/>").html("SUBJECT: CAN WARSAW PACT MEMBERS QUIT? ").text(),
+},
+{
+"x": Date.UTC(1990, 2, 2),
+"y": 5,
+"id": 336,
+"title": $("<div/>").html("SUBJECT:  U.S.-JAPAN RELATIONS: THE SOVIET PERSPECTIVE ").text(),
+},
+{
+"x": Date.UTC(1991, 4, 3),
+"y": 5,
+"id": 449,
+"title": $("<div/>").html("SUBJECT:  NATO POLITICAL COMMITTEE DISCUSSION OF END OF ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1979, 8, 13),
+"y": 6,
+"id": 13,
+"title": $("<div/>").html("SUBJECT: NEGOTIATIONS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1979, 9, 10),
+"y": 7,
+"id": 14,
+"title": $("<div/>").html("SUBJ: (c) TURKISH VIEWS ON KURDISH TROUBLES IN IRAN ").text(),
+},
+{
+"x": Date.UTC(1979, 10, 24),
+"y": 7,
+"id": 16,
+"title": $("<div/>").html("SUBJECT: SOVIET COMMENTS ON IRAN ").text(),
+},
+{
+"x": Date.UTC(1988, 2, 16),
+"y": 7,
+"id": 188,
+"title": $("<div/>").html("SUBJECT:  VIEWS OF IRANIAN KURDISH LEADER QASSEMLU ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1979, 9, 17),
+"y": 8,
+"id": 15,
+"title": $("<div/>").html("SUBJECT: PM BAZARGAN CRITICIZED ").text(),
+},
+{
+"x": Date.UTC(1979, 10, 26),
+"y": 8,
+"id": 17,
+"title": $("<div/>").html("SUBJECT: MODERATION:  DOES IT HAVE A CHANCE? ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 16),
+"y": 8,
+"id": 41,
+"title": $("<div/>").html("SUBJECT:    THE IRANIAN SUCCESSION ").text(),
+},
+{
+"x": Date.UTC(1986, 12, 9),
+"y": 8,
+"id": 147,
+"title": $("<div/>").html("SUBJECT:  ENGINEER COMMENTS ON LIFE IN RASHT, AND THE ").text(),
+},
+{
+"x": Date.UTC(1988, 1, 15),
+"y": 8,
+"id": 186,
+"title": $("<div/>").html("SUBJECT:  THE RELIGIOUS SUCCESSION IN IRAN ").text(),
+},
+{
+"x": Date.UTC(1990, 5, 21),
+"y": 8,
+"id": 361,
+"title": $("<div/>").html("SUBJECT:  IRAN A YEAR AFTER KHOMEINI - LIVING WITH THE LEGACY ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 1, 8),
+"y": 9,
+"id": 18,
+"title": $("<div/>").html("SUBJECT:  GOJ WHALING ").text(),
+},
+{
+"x": Date.UTC(1990, 3, 2),
+"y": 9,
+"id": 350,
+"title": $("<div/>").html("SUBJECT:  FOREIGN MINISTER NAKAYAMA\'S MARCH 2 FOREIGN ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 1, 9),
+"y": 10,
+"id": 19,
+"title": $("<div/>").html("SUBJECT: BOTSWANA NEWSPAPER CARRIES ARTICLE MISREPRESENTING ").text(),
+},
+{
+"x": Date.UTC(1985, 1, 10),
+"y": 10,
+"id": 20,
+"title": $("<div/>").html("SUBJECT: ANGOLANS IN SADF SEEK REFUGE IN BOTSWANA ").text(),
+},
+{
+"x": Date.UTC(1985, 2, 5),
+"y": 10,
+"id": 27,
+"title": $("<div/>").html("SUBJECT: BOTSWANA CHARGES BOPHUTHATSWANA WITH THREAT TO INVADE ").text(),
+},
+{
+"x": Date.UTC(1990, 3, 16),
+"y": 10,
+"id": 352,
+"title": $("<div/>").html("SUBJECT:  AMBASSADOR\'S SPEECH ON US FOREIGN POLICY TOWARDS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 1, 10),
+"y": 11,
+"id": 21,
+"title": $("<div/>").html("SUBJECT:  CHRISTIAN CHURCHES BOMBED IN TRIPOLI ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 15),
+"y": 11,
+"id": 38,
+"title": $("<div/>").html("SUBJECT:  JA\'JA\'S CHRISTIAN DECISION MOVEMENT ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 15),
+"y": 11,
+"id": 39,
+"title": $("<div/>").html("SUBJECT:  JA\'JA\'S MOVEMENT COMMUNIQUE ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 15),
+"y": 11,
+"id": 40,
+"title": $("<div/>").html("SUBJECT:  JA\'JA\'S CHRISTIAN DECISION MOVEMENT: ").text(),
+},
+{
+"x": Date.UTC(1985, 4, 1),
+"y": 11,
+"id": 50,
+"title": $("<div/>").html("SUBJECT:  FURTHER DETERIORATION IN SOUTH LEBANON ").text(),
+},
+{
+"x": Date.UTC(1985, 4, 2),
+"y": 11,
+"id": 51,
+"title": $("<div/>").html("SUBJECT:  DETERIORATING SITUATION IN SOUTH LEBANON ").text(),
+},
+{
+"x": Date.UTC(1985, 4, 22),
+"y": 11,
+"id": 56,
+"title": $("<div/>").html("SUBJECT:  SOUTH LEBANON:  THE ISRAELI WITHDRAWAL ").text(),
+},
+{
+"x": Date.UTC(1985, 4, 25),
+"y": 11,
+"id": 58,
+"title": $("<div/>").html("SUBJECT:  LF COMPLETES WITHDRAWAL FROM SIDON, AND ").text(),
+},
+{
+"x": Date.UTC(1985, 4, 27),
+"y": 11,
+"id": 59,
+"title": $("<div/>").html("SUBJECT: FALLOUT FROM SIDON ").text(),
+},
+{
+"x": Date.UTC(1985, 7, 25),
+"y": 11,
+"id": 88,
+"title": $("<div/>").html("SUBJECT:  SIDON:  ANOTHER WAR OF THE CAMPS IN THE OFFING? ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 1, 14),
+"y": 12,
+"id": 22,
+"title": $("<div/>").html("SUBJECT:  BOMBS IN WEST BEIRUT ").text(),
+},
+{
+"x": Date.UTC(1985, 2, 7),
+"y": 12,
+"id": 28,
+"title": $("<div/>").html("SUBJECT:     INTERNATIONAL LINKS OF LARF ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 19),
+"y": 12,
+"id": 47,
+"title": $("<div/>").html("SUBJECT: EVENING STANDARD ARTICLE ON US CAPTIVES IN ").text(),
+},
+{
+"x": Date.UTC(1985, 4, 18),
+"y": 12,
+"id": 55,
+"title": $("<div/>").html("SUBJECT:  POLITICAL RAMIFICATIONS OF WEST BEIRUT ").text(),
+},
+{
+"x": Date.UTC(1985, 5, 7),
+"y": 12,
+"id": 60,
+"title": $("<div/>").html("SUBJECT:  INTENSE FIGHTING ALONG BEIRUT\'S GREEN LINE ").text(),
+},
+{
+"x": Date.UTC(1985, 8, 19),
+"y": 12,
+"id": 89,
+"title": $("<div/>").html("SUBJECT: A BAD WEEK FOR BEIRUT ").text(),
+},
+{
+"x": Date.UTC(1986, 2, 26),
+"y": 12,
+"id": 111,
+"title": $("<div/>").html("SUBJECT:  CONFLICT BETWEEN HIZBALLAH AND THE LEBANESE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 1, 17),
+"y": 13,
+"id": 23,
+"title": $("<div/>").html("SUBJECT:  DISSIDENT FARC GROUP ATTACKS COLOMBIAN ").text(),
+},
+{
+"x": Date.UTC(1986, 4, 11),
+"y": 13,
+"id": 120,
+"title": $("<div/>").html("SUBJECT: CONTINUED FARC EXTORTION ").text(),
+},
+{
+"x": Date.UTC(1986, 7, 8),
+"y": 13,
+"id": 128,
+"title": $("<div/>").html("SUBJECT: PROSPECTS FOR COLOMBIA\'S GUERRILLA WAR ").text(),
+},
+{
+"x": Date.UTC(1987, 6, 9),
+"y": 13,
+"id": 163,
+"title": $("<div/>").html("SUBJECT: THE GUERRILLA SITUATION: PREPARING FOR WAR? ").text(),
+},
+{
+"x": Date.UTC(1987, 7, 9),
+"y": 13,
+"id": 168,
+"title": $("<div/>").html("SUBJECT: FARC PUBLICLY REJECTS DISARMAMENT ").text(),
+},
+{
+"x": Date.UTC(1988, 12, 9),
+"y": 13,
+"id": 252,
+"title": $("<div/>").html("SUBJECT: DESTRUCTION OF FARC\'S 45TH FRONT AND OTHER ").text(),
+},
+{
+"x": Date.UTC(1989, 3, 1),
+"y": 13,
+"id": 263,
+"title": $("<div/>").html("SUBJECT: FARC DECLARES CEASEFIRE AFTER NON-GOC PEACE ").text(),
+},
+{
+"x": Date.UTC(1989, 3, 6),
+"y": 13,
+"id": 264,
+"title": $("<div/>").html("SUBJECT: WHY HAS THE FARC DECLARED A UNILATERAL TRUCE? ").text(),
+},
+{
+"x": Date.UTC(1989, 11, 14),
+"y": 13,
+"id": 305,
+"title": $("<div/>").html("SUBJECT: DESERTERS REVEAL DETAILS OF THE FARC\'S BLOOD ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 26),
+"y": 13,
+"id": 331,
+"title": $("<div/>").html("SUBJECT: A FARC AMBUSH KILLS 10 MILITARY IN META ").text(),
+},
+{
+"x": Date.UTC(1991, 2, 7),
+"y": 13,
+"id": 441,
+"title": $("<div/>").html("SUBJECT:  COLOMBIA\'S FARC, ELN GUERRILLAS FLEX ").text(),
+},
+{
+"x": Date.UTC(1991, 5, 29),
+"y": 13,
+"id": 455,
+"title": $("<div/>").html("SUBJECT:  UPDATE ON FARC EXECUTION GRAVEYARD ").text(),
+},
+{
+"x": Date.UTC(1992, 2, 12),
+"y": 13,
+"id": 497,
+"title": $("<div/>").html("SUBJECT:  COLOMBIAN COMMUNISTS WANT TO TAKE OVER FARC ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 1, 31),
+"y": 14,
+"id": 24,
+"title": $("<div/>").html("SUBJ: ECONOMIC POLICY PROFILE:  SOMALIA ").text(),
+},
+{
+"x": Date.UTC(1985, 2, 4),
+"y": 14,
+"id": 26,
+"title": $("<div/>").html("SUBJ: LIBYAN ACTIVITY IN AFRICA: SOMALIA ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 15),
+"y": 14,
+"id": 201,
+"title": $("<div/>").html("SUBJECT:  ETHIOPIA:  1987 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 2, 2),
+"y": 15,
+"id": 25,
+"title": $("<div/>").html("SUBJECT:  RUMORS OF TENSIONS IN THE SOMALI REGIME ").text(),
+},
+{
+"x": Date.UTC(1985, 2, 12),
+"y": 15,
+"id": 29,
+"title": $("<div/>").html("SUBJECT: REPORT OF SOMALI OVERTURE T0 SOVIETS ").text(),
+},
+{
+"x": Date.UTC(1985, 2, 12),
+"y": 15,
+"id": 30,
+"title": $("<div/>").html("SUBJECT:  REPORT OF SOMALI OVERTURE T0 SOVIETS ").text(),
+},
+{
+"x": Date.UTC(1986, 3, 4),
+"y": 15,
+"id": 112,
+"title": $("<div/>").html("SUBJECT:  LIBYAN PRESENCE IN SOMALIA ").text(),
+},
+{
+"x": Date.UTC(1988, 7, 6),
+"y": 15,
+"id": 218,
+"title": $("<div/>").html("SUBJECT:  SOMALI INSURGENCY:  ETHIOPIAN COMPLICITY? ").text(),
+},
+{
+"x": Date.UTC(1988, 10, 3),
+"y": 15,
+"id": 239,
+"title": $("<div/>").html("SUBJECT:  SOVIET FLIRTATION WITH SOMALIA ").text(),
+},
+{
+"x": Date.UTC(1990, 2, 21),
+"y": 15,
+"id": 346,
+"title": $("<div/>").html("SUBJECT:  SOMALIS UNDULY GLOOMY OVER NEW CABINET ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 29),
+"y": 15,
+"id": 426,
+"title": $("<div/>").html("SUBJECT: LEADER OF SOMALI DEMOCRATIC MOVEMENT EXPLAINS ").text(),
+},
+{
+"x": Date.UTC(1990, 12, 20),
+"y": 15,
+"id": 434,
+"title": $("<div/>").html("SUBJ:  NORTHERN MINISTER DEPLORES CURRENT SITUATION ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 2, 18),
+"y": 16,
+"id": 31,
+"title": $("<div/>").html("SUBJECT: HIZBALLAH CALLS FOR ISLAMIC REPUBLIC IN LEBANON ").text(),
+},
+{
+"x": Date.UTC(1985, 2, 19),
+"y": 16,
+"id": 32,
+"title": $("<div/>").html("SUBJECT:  FURTHER ON HIZBALLAH MANIFESTO ").text(),
+},
+{
+"x": Date.UTC(1985, 2, 19),
+"y": 16,
+"id": 33,
+"title": $("<div/>").html("SUBJECT: HIZBALLAH ON THE MOVE ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 5),
+"y": 16,
+"id": 36,
+"title": $("<div/>").html("SUBJECT:  HIZBALLAH MANIFESTO ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 2, 26),
+"y": 17,
+"id": 34,
+"title": $("<div/>").html("SUBJECT:  THE SYRIAN MUSLIM BROTHERHOOD ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 8),
+"y": 17,
+"id": 37,
+"title": $("<div/>").html("SUBJECT:  GROWING DEBATE ON SHARIA LAW ").text(),
+},
+{
+"x": Date.UTC(1985, 4, 11),
+"y": 17,
+"id": 53,
+"title": $("<div/>").html("SUBJECT:  ISLAMIC SHARIA DEBATE--WORDS FOLLOWED BY ANOTHER ").text(),
+},
+{
+"x": Date.UTC(1986, 9, 20),
+"y": 17,
+"id": 139,
+"title": $("<div/>").html("SUBJECT: THE AL-AHRAR PARTY IN ALEXANDRIA: THE ISLAMIC RIGHT RESURGENT ").text(),
+},
+{
+"x": Date.UTC(1988, 11, 30),
+"y": 17,
+"id": 245,
+"title": $("<div/>").html("SUBJECT: NIGERIA: REACTION TO CESSATION OF SHARIA DEBATE ").text(),
+},
+{
+"x": Date.UTC(1989, 4, 5),
+"y": 17,
+"id": 268,
+"title": $("<div/>").html("SUBJECT: NIGERIA: SILENCE ON THE SHARIA DEBATE ").text(),
+},
+{
+"x": Date.UTC(1989, 4, 27),
+"y": 17,
+"id": 272,
+"title": $("<div/>").html("SUBJECT:  NIGERIA:  MUSLIMS PERSPECTIVES ON SHARIA ").text(),
+},
+{
+"x": Date.UTC(1990, 12, 23),
+"y": 17,
+"id": 435,
+"title": $("<div/>").html("SUBJECT:  SUDANESE HEAD OF STATE ENDORSES SHARIA LAW ").text(),
+},
+{
+"x": Date.UTC(1991, 6, 17),
+"y": 17,
+"id": 460,
+"title": $("<div/>").html("SUBJECT:  SHARIA--WHERE DID IT GO? ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 3, 4),
+"y": 18,
+"id": 35,
+"title": $("<div/>").html("SUBJ:  BIG BUSINESS IS ROYAL BUSINESS IN BRUNEI ").text(),
+},
+{
+"x": Date.UTC(1985, 5, 27),
+"y": 18,
+"id": 64,
+"title": $("<div/>").html("SUBJECT: THE ROLE OF SAUDI PRINCES IN UNIFORM ").text(),
+},
+{
+"x": Date.UTC(1985, 12, 2),
+"y": 18,
+"id": 98,
+"title": $("<div/>").html("SUBJECT: SULTAN OF BRUNEI STRIKES TWO MORE RAPID BLOWS AT ").text(),
+},
+{
+"x": Date.UTC(1987, 10, 8),
+"y": 18,
+"id": 175,
+"title": $("<div/>").html("SUBJECT: OFFICIAL BIOGRAPHY OF CROWN PRINCE ABDULLAH ").text(),
+},
+{
+"x": Date.UTC(1987, 11, 27),
+"y": 18,
+"id": 182,
+"title": $("<div/>").html("SUBJ: THE SULTAN\'S FIRST YEAR ON HIS OWN - A SOLID PERFORMANCE ").text(),
+},
+{
+"x": Date.UTC(1990, 1, 28),
+"y": 18,
+"id": 334,
+"title": $("<div/>").html("SUBJECT:  SULTAN:  BULLISH ON RAFSANJANI AND BEARISH ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 30),
+"y": 18,
+"id": 427,
+"title": $("<div/>").html("SUBJECT: ADMIRAL HARDISTY\'S MEETING WITH SULTAN OF BRUNEI ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 3, 16),
+"y": 19,
+"id": 42,
+"title": $("<div/>").html("SUBJECT:  JORDAN\'S REFUGEE CAMPS:  ARAFAT SHINES AGAIN ").text(),
+},
+{
+"x": Date.UTC(1985, 6, 11),
+"y": 19,
+"id": 66,
+"title": $("<div/>").html("SUBJECT:  SAUD IN TUNIS:  SUPPORT FOR ARAFAT ").text(),
+},
+{
+"x": Date.UTC(1985, 10, 21),
+"y": 19,
+"id": 94,
+"title": $("<div/>").html("SUBJECT:  ISRAELI WHITE PAPER ON PLO OUTLOOK AND GOALS ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 16),
+"y": 19,
+"id": 202,
+"title": $("<div/>").html("SUBJECT:  PEOPLE\'S REPUBLIC OF CHINA:  1987 ANNUAL ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 17),
+"y": 19,
+"id": 206,
+"title": $("<div/>").html("SUBJECT: MOROCCO: 1988 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 29),
+"y": 19,
+"id": 208,
+"title": $("<div/>").html("SUBJECT:  1987 ANNUAL TERRORISM REPORT: IRAQ ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 11),
+"y": 19,
+"id": 316,
+"title": $("<div/>").html("SUBJECT:  MOROCCO:  1989 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 15),
+"y": 19,
+"id": 479,
+"title": $("<div/>").html("SUBJECT:  1991 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 3, 16),
+"y": 20,
+"id": 43,
+"title": $("<div/>").html("SUBJECT:  SYRIA RATTLES ITS SABER ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 17),
+"y": 20,
+"id": 44,
+"title": $("<div/>").html("SUBJECT:  SYRIAN EXERTS PRESSURE ON LEBANESE ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 18),
+"y": 20,
+"id": 45,
+"title": $("<div/>").html("SUBJECT:  CHRISTIAN DECISION MOVEMENT RESPONDS TO ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 18),
+"y": 20,
+"id": 46,
+"title": $("<div/>").html("SUBJECT:  SOLVING THE CHRISTIAN CRISIS:  THE PHALANGE ").text(),
+},
+{
+"x": Date.UTC(1985, 3, 30),
+"y": 20,
+"id": 49,
+"title": $("<div/>").html("SUBJECT: JA\'JA\'-PHALANGE STALEMATE DRAGGING OUT ").text(),
+},
+{
+"x": Date.UTC(1985, 4, 4),
+"y": 20,
+"id": 52,
+"title": $("<div/>").html("SUBJECT: LEBANESE FORCES FINANCES ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 3, 20),
+"y": 21,
+"id": 48,
+"title": $("<div/>").html("SUBJECT:  FULL TEXT OF ISLAMIC JIHAD 17 MARCH STATEMENT ").text(),
+},
+{
+"x": Date.UTC(1988, 7, 18),
+"y": 21,
+"id": 220,
+"title": $("<div/>").html("SUBJECT:  ESCAPE OF THREE ISLAMIC JIHAD MEMBERS FROM ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 25),
+"y": 21,
+"id": 484,
+"title": $("<div/>").html("SUBJECT:  ISLAMIC JIHAD:  TOTAL REJECTION OF PEACE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 4, 17),
+"y": 22,
+"id": 54,
+"title": $("<div/>").html("SUBJECT:  QADHAFI INTERVIEW IN LAGOS NEWSPAPER ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 2),
+"y": 22,
+"id": 194,
+"title": $("<div/>").html("SUBJECT: CHAD: 1987 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1991, 2, 26),
+"y": 22,
+"id": 445,
+"title": $("<div/>").html("SUBJECT: QADHAFI THREATENS DEBY ").text(),
+},
+{
+"x": Date.UTC(1992, 1, 21),
+"y": 22,
+"id": 494,
+"title": $("<div/>").html("SUBJ: CHAD\'S RELATIONS WITH ITS NEIGHBORS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 5, 17),
+"y": 23,
+"id": 61,
+"title": $("<div/>").html("SUBJECT:  SENDERO CELEBRATES FIFTH ANNIVERSARY OF ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 29),
+"y": 23,
+"id": 209,
+"title": $("<div/>").html("SUBJECT:  PERU:  CONGRESSIONAL REPORT ON TERRORISM ").text(),
+},
+{
+"x": Date.UTC(1988, 7, 15),
+"y": 23,
+"id": 219,
+"title": $("<div/>").html("SUBJECT:  SENDERO ASSASSINATES APRA GOVERNOR ").text(),
+},
+{
+"x": Date.UTC(1989, 10, 4),
+"y": 23,
+"id": 299,
+"title": $("<div/>").html("SUBJECT:  RELEASE OF FACT SHEET ON THE TERRORIST GROUP, ").text(),
+},
+{
+"x": Date.UTC(1991, 5, 30),
+"y": 23,
+"id": 457,
+"title": $("<div/>").html("SUBJECT:  A SUMMARY OF RECENT ESTIMATES OF SENDERO ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 5, 22),
+"y": 24,
+"id": 62,
+"title": $("<div/>").html("SUBJECT:  IRANIANS IN DAMASCUS AND NOTES FROM TEHRAN ").text(),
+},
+{
+"x": Date.UTC(1985, 6, 12),
+"y": 24,
+"id": 67,
+"title": $("<div/>").html("SUBJECT:  SAUDI POLICY TOWARD IRAN ").text(),
+},
+{
+"x": Date.UTC(1985, 6, 27),
+"y": 24,
+"id": 76,
+"title": $("<div/>").html("SUBJECT:     IRANIAN SUPPORT FOR TERRORISM ").text(),
+},
+{
+"x": Date.UTC(1985, 11, 24),
+"y": 24,
+"id": 97,
+"title": $("<div/>").html("SUBJECT: THE GULF WAR: PROSPECTS FOR PEACE OR EXPANSION ").text(),
+},
+{
+"x": Date.UTC(1985, 12, 18),
+"y": 24,
+"id": 102,
+"title": $("<div/>").html("SUBJECT:  SYRIA AND IRAN:  ALMOST A RETURN TO STATUS QUO ").text(),
+},
+{
+"x": Date.UTC(1986, 7, 21),
+"y": 24,
+"id": 131,
+"title": $("<div/>").html("SUBJECT:     IRAN/IRAQ WAR: SITUATION IN TEHRAN ").text(),
+},
+{
+"x": Date.UTC(1986, 7, 22),
+"y": 24,
+"id": 132,
+"title": $("<div/>").html("SUBJECT:  IRAN/IRAQ WAR;  SITUATION IN TEHRAN ").text(),
+},
+{
+"x": Date.UTC(1987, 8, 26),
+"y": 24,
+"id": 171,
+"title": $("<div/>").html("SUBJECT:  WAR OF WORDS BETWEEN RIYADH AND TEHRAN ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 28),
+"y": 24,
+"id": 207,
+"title": $("<div/>").html("SUBJECT:  A SYRIAN DIPLOMAT\'S VIEW OF LIFE IN TEHRAN ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 5, 23),
+"y": 25,
+"id": 63,
+"title": $("<div/>").html("SUBJECT: IRAN TO PUBLISH HAUSA LANGUAGE MAGAZINE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 6, 5),
+"y": 26,
+"id": 65,
+"title": $("<div/>").html("SUBJECT:  REPORTS OF STARVATION IN NIGERIA ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 6, 12),
+"y": 27,
+"id": 68,
+"title": $("<div/>").html("SUBJECT:  ISRAEL\'S POLICY ON SOUTHERN LEBANON ").text(),
+},
+{
+"x": Date.UTC(1985, 6, 13),
+"y": 27,
+"id": 69,
+"title": $("<div/>").html("SUBJECT:  SYRIA AND TERRORISM ").text(),
+},
+{
+"x": Date.UTC(1986, 6, 20),
+"y": 27,
+"id": 126,
+"title": $("<div/>").html("SUBJECT:  SYRIA AND IRAN ON LEBANON:  WHO THREATENS WHOM? ").text(),
+},
+{
+"x": Date.UTC(1986, 6, 21),
+"y": 27,
+"id": 127,
+"title": $("<div/>").html("SUBJECT: SYRIA AND IRAN IN LEBANON ").text(),
+},
+{
+"x": Date.UTC(1986, 12, 1),
+"y": 27,
+"id": 145,
+"title": $("<div/>").html("SUBJECT:  CONTINUED WAR FOR THE PALESTINIAN CAMPS -- ").text(),
+},
+{
+"x": Date.UTC(1986, 12, 4),
+"y": 27,
+"id": 146,
+"title": $("<div/>").html("SUBJECT:  THE CAMPS WAR IN LEBANON ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 2),
+"y": 27,
+"id": 384,
+"title": $("<div/>").html("SUBJECT:  SYRIA AND THE IQLIM AL TUFFAH FIGHTING ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 7),
+"y": 27,
+"id": 412,
+"title": $("<div/>").html("SUBJECT:     SYRIAN-IRANIAN MEETINGS IN DAMASCUS LEAD TO ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 6, 14),
+"y": 28,
+"id": 70,
+"title": $("<div/>").html("SUBJECT:  HIJACKING OF TWA FLIGHT 847: ").text(),
+},
+{
+"x": Date.UTC(1985, 6, 14),
+"y": 28,
+"id": 71,
+"title": $("<div/>").html("SUBJECT: HIJACKING OF TWA FLIGHT 847: SITUATION AS ").text(),
+},
+{
+"x": Date.UTC(1985, 6, 14),
+"y": 28,
+"id": 72,
+"title": $("<div/>").html("SUBJECT: HIJACKING OF TWA FLIGHT 847: SITREP AS ").text(),
+},
+{
+"x": Date.UTC(1985, 7, 16),
+"y": 28,
+"id": 86,
+"title": $("<div/>").html("SUBJECT:  TERRORIST UPDATE ").text(),
+},
+{
+"x": Date.UTC(1988, 9, 1),
+"y": 28,
+"id": 233,
+"title": $("<div/>").html("SUBJECT: CIVAIR: AIR MONGOLIA - THE DO IT YOURSELF ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 6, 17),
+"y": 29,
+"id": 73,
+"title": $("<div/>").html("SUBJECT:     BACKGROUND BRIEFING ON TWA HIJACKING ").text(),
+},
+{
+"x": Date.UTC(1988, 9, 19),
+"y": 29,
+"id": 236,
+"title": $("<div/>").html("SUBJECT:  SEPTEMBER 19 ISLAMIC JIHAD FOR THE LIBERATION ").text(),
+},
+{
+"x": Date.UTC(1988, 11, 5),
+"y": 29,
+"id": 241,
+"title": $("<div/>").html("SUBJECT:  NOVEMBER 4 ISLAMIC JIHAD ORGANIZATION COMMUNIQUE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 6, 24),
+"y": 30,
+"id": 74,
+"title": $("<div/>").html("SUBJECT:  BOEING 747 CRASH OFF IRISH COAST ").text(),
+},
+{
+"x": Date.UTC(1985, 6, 24),
+"y": 30,
+"id": 75,
+"title": $("<div/>").html("SUBJECT:  AIRLINE BOMBINGS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 6, 27),
+"y": 31,
+"id": 77,
+"title": $("<div/>").html("SUBJECT:  ASAD CONGRATULATES QADHAFI ON RUPTURE WITH IRAQ ").text(),
+},
+{
+"x": Date.UTC(1985, 7, 17),
+"y": 31,
+"id": 87,
+"title": $("<div/>").html("SUBJECT:  RENEWED CLASHES IN TRIPOLI ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 6, 30),
+"y": 32,
+"id": 78,
+"title": $("<div/>").html("SUBJECT: LABOR STRIKES IN ALEXANDRIA ").text(),
+},
+{
+"x": Date.UTC(1985, 6, 30),
+"y": 32,
+"id": 79,
+"title": $("<div/>").html("SUBJECT:  LETTER FROM ALEXANDRIA:  RAMADAN I ").text(),
+},
+{
+"x": Date.UTC(1985, 7, 2),
+"y": 32,
+"id": 81,
+"title": $("<div/>").html("SUBJECT:  MORE ON LABOR STRIKE IN ALEXANDRIA ").text(),
+},
+{
+"x": Date.UTC(1985, 7, 2),
+"y": 32,
+"id": 82,
+"title": $("<div/>").html("SUBJECT:  LETTER FROM ALEXANDRIA:  RAMADAN II ").text(),
+},
+{
+"x": Date.UTC(1985, 9, 3),
+"y": 32,
+"id": 90,
+"title": $("<div/>").html("SUBJECT:  ALEXANDRIA:  A DEEPLY DIVIDED CITY ").text(),
+},
+{
+"x": Date.UTC(1986, 7, 25),
+"y": 32,
+"id": 134,
+"title": $("<div/>").html("SUBJECT:  MEETING WITH ALEXANDRIA\'S NEW GOVERNOR: FIRST ").text(),
+},
+{
+"x": Date.UTC(1986, 11, 5),
+"y": 32,
+"id": 142,
+"title": $("<div/>").html("SUBJECT:  ISRAELI ACTIVITIES IN ALEXANDRIA AND THE DELTA ").text(),
+},
+{
+"x": Date.UTC(1987, 2, 25),
+"y": 32,
+"id": 152,
+"title": $("<div/>").html("SUBJECT: ISLAMIC TRILOGY, PART I:  AN OVERVIEW OF ").text(),
+},
+{
+"x": Date.UTC(1987, 2, 25),
+"y": 32,
+"id": 153,
+"title": $("<div/>").html("SUBJECT:  ISLAMIC TRILOGY, PART II:  LEADERS AND ").text(),
+},
+{
+"x": Date.UTC(1987, 2, 25),
+"y": 32,
+"id": 154,
+"title": $("<div/>").html("SUBJECT:  ISLAMIC TRILOGY, PART III:  COMMERCIAL AND ").text(),
+},
+{
+"x": Date.UTC(1990, 4, 15),
+"y": 32,
+"id": 357,
+"title": $("<div/>").html("SUBJECT:  ALEXANDRIA:  THE MOOD OF RAMADAN ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 7, 4),
+"y": 33,
+"id": 83,
+"title": $("<div/>").html("SUBJECT:  RAFSANJANI CONDEMN\'S HIJACKINGS AND SUPER- ").text(),
+},
+{
+"x": Date.UTC(1986, 11, 5),
+"y": 33,
+"id": 143,
+"title": $("<div/>").html("SUBJ:  RAFSANJANI ON RELEASE OF HOSTAGES ").text(),
+},
+{
+"x": Date.UTC(1987, 4, 23),
+"y": 33,
+"id": 159,
+"title": $("<div/>").html("SUBJECT:   LATEST RAFSANJANI STATEMENTS ").text(),
+},
+{
+"x": Date.UTC(1990, 2, 28),
+"y": 33,
+"id": 348,
+"title": $("<div/>").html("SUBJECT:  HARDLINERS CONTINUE ATTACK ON RAFSANJANI ON ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 7, 5),
+"y": 34,
+"id": 84,
+"title": $("<div/>").html("SUBJECT:  GOL ANNOUNCES SECURITY PLAN FOR BEIRUT AIRPORT, ").text(),
+},
+{
+"x": Date.UTC(1985, 7, 11),
+"y": 34,
+"id": 85,
+"title": $("<div/>").html("SUBJECT: TWA 847 HIJACKING: DIPLOMATIC NOTE TO GOL ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 10, 2),
+"y": 35,
+"id": 91,
+"title": $("<div/>").html("SUBJECT:  25TH ANNIVERSARY CELEBRATIONS IN KADUNA ").text(),
+},
+{
+"x": Date.UTC(1985, 10, 9),
+"y": 35,
+"id": 92,
+"title": $("<div/>").html("SUBJECT:  NORTHERN NIGERIA ECONOMIC QUARTERLY ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 10, 15),
+"y": 36,
+"id": 93,
+"title": $("<div/>").html("SUBJECT:    STATUS OF MILITARY SEALIFT COMMAND VESSELS ").text(),
+},
+{
+"x": Date.UTC(1987, 10, 28),
+"y": 36,
+"id": 177,
+"title": $("<div/>").html("SUBJECT: AIDS TESTING OF VISITING U.S. MILITARY ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 10, 31),
+"y": 37,
+"id": 95,
+"title": $("<div/>").html("SUBJECT:  URBAN VIOLENCE IN BRITAIN -- THE CHALLENGE ").text(),
+},
+{
+"x": Date.UTC(1988, 8, 9),
+"y": 37,
+"id": 221,
+"title": $("<div/>").html("SUBJECT:  NORTHERN IRELAND - CONTROLLING THE VIOLENCE ").text(),
+},
+{
+"x": Date.UTC(1988, 12, 9),
+"y": 37,
+"id": 251,
+"title": $("<div/>").html("SUBJECT:  THE UK:  1988 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1990, 2, 13),
+"y": 37,
+"id": 343,
+"title": $("<div/>").html("SUBJECT:  1989 ANNUAL TERRORISM REPORT FOR THE UK ").text(),
+},
+{
+"x": Date.UTC(1992, 1, 2),
+"y": 37,
+"id": 490,
+"title": $("<div/>").html("SUBJECT:     UNITED KINGDOM: 1991 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 11, 7),
+"y": 38,
+"id": 96,
+"title": $("<div/>").html("SUBJECT:  MAJOR POLICE ACTION AGAINST SIKHS IN VANCOUVER ").text(),
+},
+{
+"x": Date.UTC(1987, 8, 7),
+"y": 38,
+"id": 170,
+"title": $("<div/>").html("SUBJECT:  INCREASE IN SIKH TERRORISM LIKELY: NO ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1985, 12, 6),
+"y": 39,
+"id": 99,
+"title": $("<div/>").html("SUBJECT:  ABU NIDAL TERRORIST ORGANIZATION ").text(),
+},
+{
+"x": Date.UTC(1985, 12, 9),
+"y": 39,
+"id": 100,
+"title": $("<div/>").html("SUBJECT: ABU NIDAL AND THE BITAR ASSASSINATION ").text(),
+},
+{
+"x": Date.UTC(1985, 12, 16),
+"y": 39,
+"id": 101,
+"title": $("<div/>").html("SUBJECT:  ABU NIDAL TERRORIST ORGANIZATION ").text(),
+},
+{
+"x": Date.UTC(1985, 12, 19),
+"y": 39,
+"id": 103,
+"title": $("<div/>").html("SUBJECT:  ABU NIDAL TERRORIST ORGANIZATION ").text(),
+},
+{
+"x": Date.UTC(1985, 12, 31),
+"y": 39,
+"id": 104,
+"title": $("<div/>").html("SUBJECT:      PAPER ON THE ABU NIDAL GROUP ").text(),
+},
+{
+"x": Date.UTC(1986, 1, 16),
+"y": 39,
+"id": 105,
+"title": $("<div/>").html("SUBJECT:   PLO OFFICIALS SAY ABU NIDAL\'S GROUP IS THE ").text(),
+},
+{
+"x": Date.UTC(1986, 4, 2),
+"y": 39,
+"id": 118,
+"title": $("<div/>").html("SUBJECT:  LIBYAN SUPPORTED TERRORISM ").text(),
+},
+{
+"x": Date.UTC(1986, 5, 27),
+"y": 39,
+"id": 125,
+"title": $("<div/>").html("SUBJ:  TALKING ABOUT ABU NIDAL ").text(),
+},
+{
+"x": Date.UTC(1986, 12, 19),
+"y": 39,
+"id": 149,
+"title": $("<div/>").html("SUBJECT:      DOCUMENTS ON SYRIAN SUPPORT FOR TERRORISM ").text(),
+},
+{
+"x": Date.UTC(1987, 3, 27),
+"y": 39,
+"id": 156,
+"title": $("<div/>").html("SUBJECT:  CHANGES IN ABU NIDAL ORGANIZATION ").text(),
+},
+{
+"x": Date.UTC(1987, 6, 5),
+"y": 39,
+"id": 161,
+"title": $("<div/>").html("SUBJECT:  SYRIAN CLOSURE OF ABU NIDAL OFFICES ").text(),
+},
+{
+"x": Date.UTC(1987, 6, 10),
+"y": 39,
+"id": 164,
+"title": $("<div/>").html("SUBJECT:  SYRIAN EXPULSION OF THE ABU NIDAL ORGANIZATION ").text(),
+},
+{
+"x": Date.UTC(1987, 7, 1),
+"y": 39,
+"id": 165,
+"title": $("<div/>").html("SUBJECT:  SYRIAN RELATIONS WITH ABU NIDAL AND THE PLO ").text(),
+},
+{
+"x": Date.UTC(1990, 6, 6),
+"y": 39,
+"id": 364,
+"title": $("<div/>").html("SUBJECT:  REPORT THAT ABU NIDAL IS IN IRAQ ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 1, 23),
+"y": 40,
+"id": 106,
+"title": $("<div/>").html("SUBJECT: KHAMENEI\'S VISIT: RESURGENCE OF SHIA EXTREMISM? ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 1, 23),
+"y": 41,
+"id": 107,
+"title": $("<div/>").html("SUBJECT:  THE UGANDA SITUATION: LONDON VIEWS ").text(),
+},
+{
+"x": Date.UTC(1986, 1, 30),
+"y": 41,
+"id": 109,
+"title": $("<div/>").html("SUBJECT: DEVELOPMENTS IN UGANDA ").text(),
+},
+{
+"x": Date.UTC(1986, 3, 14),
+"y": 41,
+"id": 113,
+"title": $("<div/>").html("SUBJECT:  MUSEVENI\'S BANNING OF POLITICAL ACTIVITY - ").text(),
+},
+{
+"x": Date.UTC(1986, 7, 16),
+"y": 41,
+"id": 130,
+"title": $("<div/>").html("SUBJECT:  MUSEVENI AND THE RADICAL MUSLIMS. ").text(),
+},
+{
+"x": Date.UTC(1987, 1, 21),
+"y": 41,
+"id": 150,
+"title": $("<div/>").html("SUBJECT:  MEETING WITH MUSEVENI. ").text(),
+},
+{
+"x": Date.UTC(1988, 5, 4),
+"y": 41,
+"id": 215,
+"title": $("<div/>").html("SUBJECT:  ANNUAL TERRORISM REPORT--STATUS OF PLO IN ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 7),
+"y": 41,
+"id": 315,
+"title": $("<div/>").html("SUBJECT: UGANDA: 1989 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1991, 10, 30),
+"y": 41,
+"id": 473,
+"title": $("<div/>").html("SUBJECT: KAMPALA - 1991 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 1, 25),
+"y": 42,
+"id": 108,
+"title": $("<div/>").html("SUBJECT:  THREAT LETTER FROM ISLAMIC JIHAD ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 2, 21),
+"y": 43,
+"id": 110,
+"title": $("<div/>").html("SUBJECT:  OBSERVATIONS ON SOVIET MIR SPACE STATION ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 3, 16),
+"y": 44,
+"id": 114,
+"title": $("<div/>").html("SUBJECT:  LIBYAN AND IRAQI RECRUITING ATTRACTS ").text(),
+},
+{
+"x": Date.UTC(1986, 3, 24),
+"y": 44,
+"id": 115,
+"title": $("<div/>").html("SUBJECT:  IRANIAN AND LIBYAN TERRORISM ").text(),
+},
+{
+"x": Date.UTC(1986, 4, 1),
+"y": 44,
+"id": 117,
+"title": $("<div/>").html("SUBJECT:  SOMALI ATTITUDE ON LIBYA ").text(),
+},
+{
+"x": Date.UTC(1986, 4, 17),
+"y": 44,
+"id": 121,
+"title": $("<div/>").html("SUBJECT:  SOMALI WARNING TO LIBYANS ON TERRORISM ").text(),
+},
+{
+"x": Date.UTC(1986, 5, 1),
+"y": 44,
+"id": 122,
+"title": $("<div/>").html("SUBJECT:    FACT SHEET: LIBYAN RELATED TERRORIST INCIDENTS ").text(),
+},
+{
+"x": Date.UTC(1990, 3, 26),
+"y": 44,
+"id": 354,
+"title": $("<div/>").html("SUBJECT:  LIBYAN PRESENCE IN SUDAN ").text(),
+},
+{
+"x": Date.UTC(1991, 5, 16),
+"y": 44,
+"id": 453,
+"title": $("<div/>").html("SUBJECT:  COUNTERING LIBYAN INFLUENCE IN NIGER ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 14),
+"y": 44,
+"id": 477,
+"title": $("<div/>").html("SUBJECT:   LIBYAN OFFICIALS INDICTED FOR BOMBING PAN 103 ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 3, 25),
+"y": 45,
+"id": 116,
+"title": $("<div/>").html("SUBJ:  CLAIM EMBASSY BEIRUT ATTACKED BECAUSE OF US-LIBYAN CLASHES ").text(),
+},
+{
+"x": Date.UTC(1989, 1, 23),
+"y": 45,
+"id": 259,
+"title": $("<div/>").html("SUBJECT:  QADDHAFI MESSAGE TO KING HUSSEIN ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 4, 11),
+"y": 46,
+"id": 119,
+"title": $("<div/>").html("SUBJECT:  SPAIN RECALLS AMBASSADOR FROM LIBYA IN ").text(),
+},
+{
+"x": Date.UTC(1986, 5, 12),
+"y": 46,
+"id": 124,
+"title": $("<div/>").html("SUBJECT:  QADHAFI RETALIATES AGAINST SPANISH EXPULSIONS ").text(),
+},
+{
+"x": Date.UTC(1986, 7, 14),
+"y": 46,
+"id": 129,
+"title": $("<div/>").html("SUBJECT:  SHI\'IA TERRORISTS PARDONED BY SPANISH GOVERNMENT ").text(),
+},
+{
+"x": Date.UTC(1988, 12, 9),
+"y": 46,
+"id": 250,
+"title": $("<div/>").html("SUBJECT: SPAIN:  1988 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1990, 10, 31),
+"y": 46,
+"id": 409,
+"title": $("<div/>").html("SUBJECT: SPAIN: 1990 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 12),
+"y": 46,
+"id": 475,
+"title": $("<div/>").html("SUBJECT: SPAIN: 1991 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 5, 8),
+"y": 47,
+"id": 123,
+"title": $("<div/>").html("SUBJECT: IRAQI AIR FORCE BOMBS TEHRAN REFINERY ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 2),
+"y": 47,
+"id": 191,
+"title": $("<div/>").html("SUBJECT:    IRAQI MISSILE ATTACKS ON TEHRAN ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 2),
+"y": 47,
+"id": 193,
+"title": $("<div/>").html("SUBJ:  IRAQ-IRAN WAR: ESCALATION OF THE WAR: NEED TO ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 6),
+"y": 47,
+"id": 195,
+"title": $("<div/>").html("SUBJECT:  IRAQI MISSILE ATTACKS ON TEHRAN ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 10),
+"y": 47,
+"id": 196,
+"title": $("<div/>").html("SUBJECT:  IRAQ HALTS WAR OF THE CITIES ").text(),
+},
+{
+"x": Date.UTC(1988, 5, 9),
+"y": 47,
+"id": 216,
+"title": $("<div/>").html("SUBJECT:  IRAQ KEEPS THREATENING TO SEND MISSILES ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 7, 23),
+"y": 48,
+"id": 133,
+"title": $("<div/>").html("SUBJECT:  IRAN-IRAQ:  IRAQI DEBT REPAYMENT AND ").text(),
+},
+{
+"x": Date.UTC(1986, 9, 8),
+"y": 48,
+"id": 136,
+"title": $("<div/>").html("SUBJECT:  ISTANBUL SYNAGOGUE ATTACK:  PRESS COVERAGE ").text(),
+},
+{
+"x": Date.UTC(1986, 9, 17),
+"y": 48,
+"id": 138,
+"title": $("<div/>").html("SUBJECT: MFA SPECULATION ON MOTIVES FOR NEVE SHALOM ").text(),
+},
+{
+"x": Date.UTC(1988, 12, 10),
+"y": 48,
+"id": 253,
+"title": $("<div/>").html("SUBJECT: TURKEY: 1988 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 6),
+"y": 48,
+"id": 314,
+"title": $("<div/>").html("SUBJECT: TURKEY: 1989 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 21),
+"y": 48,
+"id": 482,
+"title": $("<div/>").html("SUBJECT:   1991 ANNUAL TERRORISM REPORT FOR TURKEY ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 8, 11),
+"y": 49,
+"id": 135,
+"title": $("<div/>").html("SUBJECT: ROUND-UP OF BULGARIAN TURKS ").text(),
+},
+{
+"x": Date.UTC(1989, 7, 18),
+"y": 49,
+"id": 289,
+"title": $("<div/>").html("SUBJECT: TURKISH ISLAMIC JIHAD ARMY ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 28),
+"y": 49,
+"id": 400,
+"title": $("<div/>").html("SUBJECT: TFKU01: WAR OF THE EMBASSIES SITREP: TURKS THROW IN THE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 9, 16),
+"y": 50,
+"id": 137,
+"title": $("<div/>").html("SUBJECT:  MUSLIM BROTHERHOOD:  EAGER FOR U.S. CONTACTS, ").text(),
+},
+{
+"x": Date.UTC(1988, 8, 18),
+"y": 50,
+"id": 222,
+"title": $("<div/>").html("SUBJECT:  MUSLIM BROTHERHOOD DEVELOPMENTS AND ").text(),
+},
+{
+"x": Date.UTC(1988, 9, 6),
+"y": 50,
+"id": 234,
+"title": $("<div/>").html("SUBJECT:  MUSLIM BROTHERHOOD - JIHAD FRICTIONS ").text(),
+},
+{
+"x": Date.UTC(1989, 7, 20),
+"y": 50,
+"id": 291,
+"title": $("<div/>").html("SUBJECT: MUSLIM BROTHERHOOD:  DEFANGED BUT REHABILITATED ").text(),
+},
+{
+"x": Date.UTC(1991, 7, 11),
+"y": 50,
+"id": 464,
+"title": $("<div/>").html("SUBJECT:  THE GREAT SHAYKHS:  THE MUSLIM BROTHERHOOD AND ").text(),
+},
+{
+"x": Date.UTC(1992, 2, 24),
+"y": 50,
+"id": 498,
+"title": $("<div/>").html("SUBJECT: MUSLIM BROTHERHOOD GOES ON THE WAGON ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 10, 21),
+"y": 51,
+"id": 140,
+"title": $("<div/>").html("SUBJECT:  ALGERIA AND THE ARAB WORLD:  MOVING FROM ").text(),
+},
+{
+"x": Date.UTC(1987, 4, 11),
+"y": 51,
+"id": 158,
+"title": $("<div/>").html("SUBJECT:  ALGERIA AND THE PLO ").text(),
+},
+{
+"x": Date.UTC(1988, 2, 4),
+"y": 51,
+"id": 187,
+"title": $("<div/>").html("SUBJECT: LIBYA: THE VIEW FROM QADHAFI\'S BACK PORCH ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 14),
+"y": 51,
+"id": 197,
+"title": $("<div/>").html("SUBJECT:  ALGERIA:  1987 ANNUAL TERRORISM REPORT: ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 14),
+"y": 51,
+"id": 199,
+"title": $("<div/>").html("SUBJECT:  ALGERIA:  1987 ANNUAL TERRORISM REPORT: ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 11, 4),
+"y": 52,
+"id": 141,
+"title": $("<div/>").html("SUBJECT:  PLOTE AND THE LTTE ").text(),
+},
+{
+"x": Date.UTC(1987, 2, 12),
+"y": 52,
+"id": 151,
+"title": $("<div/>").html("SUBJECT:  INSIDE THE LTTE:  A LOOK AT THE TIGERS\' ").text(),
+},
+{
+"x": Date.UTC(1987, 7, 9),
+"y": 52,
+"id": 167,
+"title": $("<div/>").html("SUBJECT:  THE LTTE FACES PROBLEMS ").text(),
+},
+{
+"x": Date.UTC(1987, 9, 25),
+"y": 52,
+"id": 173,
+"title": $("<div/>").html("SUBJ: INDIAN FRICTION WITH LTTE GROWS ").text(),
+},
+{
+"x": Date.UTC(1987, 10, 29),
+"y": 52,
+"id": 178,
+"title": $("<div/>").html("SUBJECT: LTTE: MADRAS VIEWS AND MISCELLANEY ").text(),
+},
+{
+"x": Date.UTC(1987, 11, 2),
+"y": 52,
+"id": 180,
+"title": $("<div/>").html("SUBJECT: N. RAM: LTTE CRUSHED, MAHATHAYA DEAD? ").text(),
+},
+{
+"x": Date.UTC(1988, 4, 5),
+"y": 52,
+"id": 211,
+"title": $("<div/>").html("SUBJECT:  INDIAN PAYOFF TO LTTE REVEALED ").text(),
+},
+{
+"x": Date.UTC(1989, 1, 9),
+"y": 52,
+"id": 258,
+"title": $("<div/>").html("SUBJECT:  GOI OFFICIAL ON STRENGTH OF LTTE ").text(),
+},
+{
+"x": Date.UTC(1989, 4, 3),
+"y": 52,
+"id": 267,
+"title": $("<div/>").html("SUBJECT:    LETTERS TO DEPARTMENT FROM LTTE ").text(),
+},
+{
+"x": Date.UTC(1989, 4, 11),
+"y": 52,
+"id": 269,
+"title": $("<div/>").html("SUBJECT:  WHAT EVER HAPPENED TO THE LTTE? ").text(),
+},
+{
+"x": Date.UTC(1990, 4, 17),
+"y": 52,
+"id": 358,
+"title": $("<div/>").html("SUBJECT:  KARUNANIDHI: IS THE TAMIL NADU CHIEF MINISTER ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 16),
+"y": 52,
+"id": 418,
+"title": $("<div/>").html("SUBJECT:  1990 ANNUAL TERRORISM REPORT: SRI LANKA AND ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 11, 13),
+"y": 53,
+"id": 144,
+"title": $("<div/>").html("SUBJ:  NO NASSERISM, ONLY NASSERISTS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1986, 12, 12),
+"y": 54,
+"id": 148,
+"title": $("<div/>").html("SUBJECT:  THE BRAZILIAN CONNECTION WITH IRAN AND ").text(),
+},
+{
+"x": Date.UTC(1987, 5, 21),
+"y": 54,
+"id": 160,
+"title": $("<div/>").html("SUBJECT:       U.S. PLANS ARMS SALE TO SAUDIS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1987, 3, 6),
+"y": 55,
+"id": 155,
+"title": $("<div/>").html("SUBJECT:  CASTRO ON ARTISTIC FREEDOM ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1987, 4, 2),
+"y": 56,
+"id": 157,
+"title": $("<div/>").html("SUBJECT:  BANGLADESH-INDIA RELATIONS ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 17),
+"y": 56,
+"id": 205,
+"title": $("<div/>").html("SUBJECT:  BANGLADESH: 1987 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1991, 7, 11),
+"y": 56,
+"id": 463,
+"title": $("<div/>").html("SUBJECT:  MEETING WITH AWAMI LEAGUE LEADER SHEIKH HASINA ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1987, 6, 8),
+"y": 57,
+"id": 162,
+"title": $("<div/>").html("SUBJ: CONVERSATION WITH FEMALE UNIVERSITY OF ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1987, 7, 7),
+"y": 58,
+"id": 166,
+"title": $("<div/>").html("SUBJECT:      PKK PLANS AND AMERIN CASE ").text(),
+},
+{
+"x": Date.UTC(1987, 7, 10),
+"y": 58,
+"id": 169,
+"title": $("<div/>").html("SUBJECT:  SYRIA AND NEWS OF A NEW AND GRAVE MOVE BY ").text(),
+},
+{
+"x": Date.UTC(1988, 2, 28),
+"y": 58,
+"id": 190,
+"title": $("<div/>").html("SUBJECT:  KURDISH INSURGENCY IN IRAQ AND TURKEY ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 30),
+"y": 58,
+"id": 210,
+"title": $("<div/>").html("SUBJECT: PKK KILLS NINE IN SIIRT ").text(),
+},
+{
+"x": Date.UTC(1988, 9, 15),
+"y": 58,
+"id": 235,
+"title": $("<div/>").html("SUBJECT:  HAS THE FRG CHANGED ITS VIEW OF THE PKK? ").text(),
+},
+{
+"x": Date.UTC(1988, 9, 21),
+"y": 58,
+"id": 237,
+"title": $("<div/>").html("SUBJECT: GERMANS AND PKK ").text(),
+},
+{
+"x": Date.UTC(1988, 10, 25),
+"y": 58,
+"id": 240,
+"title": $("<div/>").html("SUBJECT:  POLICE FOIL APPARENT PKK ESCAPE ATTEMPT IN ").text(),
+},
+{
+"x": Date.UTC(1989, 1, 31),
+"y": 58,
+"id": 261,
+"title": $("<div/>").html("SUBJECT:  LOOKING BACK:  THE PKK IN 1988 ").text(),
+},
+{
+"x": Date.UTC(1989, 3, 24),
+"y": 58,
+"id": 266,
+"title": $("<div/>").html("SUBJECT:  ALLEGATIONS OF SYRIAN COOPERATION WITH PKK ").text(),
+},
+{
+"x": Date.UTC(1989, 10, 12),
+"y": 58,
+"id": 301,
+"title": $("<div/>").html("SUBJECT: SYRIAN SUPPORT FOR PKK ").text(),
+},
+{
+"x": Date.UTC(1990, 5, 14),
+"y": 58,
+"id": 360,
+"title": $("<div/>").html("SUBJECT:     PKK TERRORISM - SYRIAN CONNECTION ").text(),
+},
+{
+"x": Date.UTC(1991, 3, 28),
+"y": 58,
+"id": 448,
+"title": $("<div/>").html("SUBJECT: SYRIA, THE PKK AND WATER ").text(),
+},
+{
+"x": Date.UTC(1991, 5, 31),
+"y": 58,
+"id": 458,
+"title": $("<div/>").html("SUBJECT:  LEFTIST MAGAZINE CLAIMS PKK WILL HIT THE U.S. ARMY ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1987, 10, 7),
+"y": 59,
+"id": 174,
+"title": $("<div/>").html("SUBJECT: REACTION TO AND BACKGROUND ON TUNISIA\'S NEW ").text(),
+},
+{
+"x": Date.UTC(1987, 10, 9),
+"y": 59,
+"id": 176,
+"title": $("<div/>").html("SUBJECT:  BEN ALI AS PRIME MINISTER:  WHAT DOES IT MEAN? ").text(),
+},
+{
+"x": Date.UTC(1987, 12, 19),
+"y": 59,
+"id": 183,
+"title": $("<div/>").html("SUBJECT:    PRESIDENTIAL CORRESPONDENCE ").text(),
+},
+{
+"x": Date.UTC(1988, 5, 19),
+"y": 59,
+"id": 217,
+"title": $("<div/>").html("SUBJECT:  RAMADAN IN TUNISIA:  OBSERVANCE AND ").text(),
+},
+{
+"x": Date.UTC(1988, 11, 8),
+"y": 59,
+"id": 242,
+"title": $("<div/>").html("SUBJECT:  TUNISIA CELEBRATES 7 NOVEMBER; ELECTIONS ").text(),
+},
+{
+"x": Date.UTC(1988, 12, 14),
+"y": 59,
+"id": 254,
+"title": $("<div/>").html("SUBJECT:  (U) SPR 0002, TUNISIA\'S RELATIONS WITH ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1987, 10, 29),
+"y": 60,
+"id": 179,
+"title": $("<div/>").html("SUBJECT: RAFSANJANI STICKS TO NAMING AGGRESSOR BEFORE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1987, 11, 6),
+"y": 61,
+"id": 181,
+"title": $("<div/>").html("SUBJECT: MBEKI\'S RELEASE -- WHAT DOES IT MEAN? ").text(),
+},
+{
+"x": Date.UTC(1989, 11, 16),
+"y": 61,
+"id": 307,
+"title": $("<div/>").html("SUBJECT: MEETING WITH ANC LEADER THABO MBEKI ").text(),
+},
+{
+"x": Date.UTC(1990, 1, 17),
+"y": 61,
+"id": 333,
+"title": $("<div/>").html("SUBJ:  ESSA MOOSA TALKS ABOUT MANDELA AND OTHER TOPICS ").text(),
+},
+{
+"x": Date.UTC(1990, 2, 9),
+"y": 61,
+"id": 340,
+"title": $("<div/>").html("SUBJECT: THE BEAT GOES ON: MASS PROTEST ACTIONS PROLIFERATE ").text(),
+},
+{
+"x": Date.UTC(1990, 2, 13),
+"y": 61,
+"id": 341,
+"title": $("<div/>").html("SUBJECT:  THOUSANDS IN JOHANNESBURG PEACEFULLY ").text(),
+},
+{
+"x": Date.UTC(1990, 2, 14),
+"y": 61,
+"id": 344,
+"title": $("<div/>").html("SUBJECT: AFRICA IN THE U.S. PRESS - FEBRUARY 13, 1990 ").text(),
+},
+{
+"x": Date.UTC(1990, 10, 24),
+"y": 61,
+"id": 406,
+"title": $("<div/>").html("SUBJECT:  THABO MBEKI ON THE STATE OF PLAY ").text(),
+},
+{
+"x": Date.UTC(1990, 12, 17),
+"y": 61,
+"id": 432,
+"title": $("<div/>").html("SUBJECT:  THE SAG-ANC RELATIONSHIP: A YEAR END PERSPECTIVE ").text(),
+},
+{
+"x": Date.UTC(1991, 3, 20),
+"y": 61,
+"id": 446,
+"title": $("<div/>").html("SUBJECT: THE ANC\'S THABO MBEKI AND CHRIS HANI ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1987, 12, 30),
+"y": 62,
+"id": 184,
+"title": $("<div/>").html("SUBJECT: EXPLOSION AT IZMIR SUMERBANK ").text(),
+},
+{
+"x": Date.UTC(1988, 8, 22),
+"y": 62,
+"id": 225,
+"title": $("<div/>").html("SUBJECT:  22 PKK TERRORISTS ARRESTED ").text(),
+},
+{
+"x": Date.UTC(1988, 9, 1),
+"y": 62,
+"id": 232,
+"title": $("<div/>").html("SUBJECT: ARREST OF PKK MEMBERS IN IZMIR ").text(),
+},
+{
+"x": Date.UTC(1991, 6, 6),
+"y": 62,
+"id": 459,
+"title": $("<div/>").html("SUBJECT: LIBYANS RETURN TO IZMIR; THEY ARE WELCOME AS LONG AS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 1, 2),
+"y": 63,
+"id": 185,
+"title": $("<div/>").html("SUBJECT:  CHRISTIANS IN MOSUL ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 2, 17),
+"y": 64,
+"id": 189,
+"title": $("<div/>").html("SUBJECT: CUBA AFTER CASTRO -- ARE WE READY? ").text(),
+},
+{
+"x": Date.UTC(1988, 12, 2),
+"y": 64,
+"id": 246,
+"title": $("<div/>").html("SUBJECT: CUBA: 1988 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1989, 10, 6),
+"y": 64,
+"id": 300,
+"title": $("<div/>").html("SUBJECT:  CASTRO PROJECTING IMAGE OF OPTIMISM ").text(),
+},
+{
+"x": Date.UTC(1990, 1, 16),
+"y": 64,
+"id": 332,
+"title": $("<div/>").html("SUBJECT:  CASTRO\'S CREED SOCIALISM OR DEATH ").text(),
+},
+{
+"x": Date.UTC(1990, 10, 25),
+"y": 64,
+"id": 407,
+"title": $("<div/>").html("SUBJECT: ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1992, 2, 7),
+"y": 64,
+"id": 496,
+"title": $("<div/>").html("SUBJECT:     SPAIN AND CASTRO ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 3, 2),
+"y": 65,
+"id": 192,
+"title": $("<div/>").html("SUBJECT: THE REGIME IS PART OF THE PROBLEM ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 3, 14),
+"y": 66,
+"id": 198,
+"title": $("<div/>").html("SUBJECT:  THE NEW GOZ:  BIO INFORMATION ").text(),
+},
+{
+"x": Date.UTC(1988, 11, 15),
+"y": 66,
+"id": 243,
+"title": $("<div/>").html("SUBJECT:  ZIMBABWE - 1988 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1989, 7, 12),
+"y": 66,
+"id": 288,
+"title": $("<div/>").html("SUBJECT:  RENAMO KILLS MORE CIVILIANS IN NORTHERN ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 14),
+"y": 66,
+"id": 476,
+"title": $("<div/>").html("SUBJECT:  ZIMBABWE: 1991 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 3, 14),
+"y": 67,
+"id": 200,
+"title": $("<div/>").html("SUBJECT:  GREECE:  1987 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1988, 12, 15),
+"y": 67,
+"id": 255,
+"title": $("<div/>").html("SUBJECT:  GREECE:  1988 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1989, 7, 18),
+"y": 67,
+"id": 290,
+"title": $("<div/>").html("SUBJECT:  FACT SHEET ON 17 NOVEMBER ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 3, 16),
+"y": 68,
+"id": 203,
+"title": $("<div/>").html("SUBJECT:  REPUBLIC OF KOREA:  1987 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1988, 3, 16),
+"y": 68,
+"id": 204,
+"title": $("<div/>").html("SUBJECT:  REPUBLIC OF KOREA:  1987 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 4, 6),
+"y": 69,
+"id": 212,
+"title": $("<div/>").html("SUBJECT: NICARAGUA: 1987 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 4, 14),
+"y": 70,
+"id": 213,
+"title": $("<div/>").html("SUBJECT:  LEBANON:  EXCHANGE WITH MFA ECONOMIC DIRECTOR ").text(),
+},
+{
+"x": Date.UTC(1990, 3, 1),
+"y": 70,
+"id": 349,
+"title": $("<div/>").html("SUBJECT:  SPYING CHARGES AGAINST USSR ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 4, 19),
+"y": 71,
+"id": 214,
+"title": $("<div/>").html("SUBJ:  IRAQI OPERATION TO RECAPTURE FAO:WE SHOWED ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 8, 19),
+"y": 72,
+"id": 223,
+"title": $("<div/>").html("SUBJECT:  STAYING THE COURSE IN THE PERSIAN GULF ").text(),
+},
+{
+"x": Date.UTC(1988, 8, 22),
+"y": 72,
+"id": 226,
+"title": $("<div/>").html("SUBJECT: UNDERSTANDINGS RELATING TO CEASE-FIRE AND UN OBSERVERS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 8, 22),
+"y": 73,
+"id": 224,
+"title": $("<div/>").html("SUBJECT: IRAQI COMMENTARY WARNS AGAINST TILT TOWARD IRAN ").text(),
+},
+{
+"x": Date.UTC(1988, 8, 23),
+"y": 73,
+"id": 227,
+"title": $("<div/>").html("SUBJECT: IRAN-IRAQ: EVE OF GENEVA ").text(),
+},
+{
+"x": Date.UTC(1988, 8, 23),
+"y": 73,
+"id": 228,
+"title": $("<div/>").html("SUBJECT:  IRAQ STRESSES NORMALCY WHILE WARNING IRAN ").text(),
+},
+{
+"x": Date.UTC(1988, 8, 24),
+"y": 73,
+"id": 229,
+"title": $("<div/>").html("SUBJECT: THE GREAT SATAN NO LONGER A SATAN ").text(),
+},
+{
+"x": Date.UTC(1988, 8, 25),
+"y": 73,
+"id": 230,
+"title": $("<div/>").html("SUBJECT:  GUILT FOR THE GULF WAR: IRAQ PAYS FOR AD TO ").text(),
+},
+{
+"x": Date.UTC(1990, 4, 9),
+"y": 73,
+"id": 356,
+"title": $("<div/>").html("SUBJECT: SADDAM EXPLAINS AND DEFENDS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 9, 1),
+"y": 74,
+"id": 231,
+"title": $("<div/>").html("SUBJECT:  PLO AND THE INTIFADA ").text(),
+},
+{
+"x": Date.UTC(1988, 9, 23),
+"y": 74,
+"id": 238,
+"title": $("<div/>").html("SUBJECT:  FUNDAMENTALISM AND THE INTIFADA: ").text(),
+},
+{
+"x": Date.UTC(1989, 9, 29),
+"y": 74,
+"id": 297,
+"title": $("<div/>").html("SUBJECT:  ISLAMIC GROUP, HAMAS, OUTLAWED ").text(),
+},
+{
+"x": Date.UTC(1990, 9, 25),
+"y": 74,
+"id": 403,
+"title": $("<div/>").html("SUBJECT: FATAH AND HAMAS CLAIM RECONCILIATION ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 11, 29),
+"y": 75,
+"id": 244,
+"title": $("<div/>").html("SUBJECT:  1988 ANNUAL TERRORISM REPORT:  GHANA ").text(),
+},
+{
+"x": Date.UTC(1988, 12, 8),
+"y": 75,
+"id": 248,
+"title": $("<div/>").html("SUBJECT:  SAUDI ARABIA: 1988 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1988, 12, 9),
+"y": 75,
+"id": 249,
+"title": $("<div/>").html("SUBJECT:  LEGISLATIVELY MANDATED TERRORISM REPORTS: ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 6),
+"y": 75,
+"id": 312,
+"title": $("<div/>").html("SUBJECT: SAUDI ARABIA: 1989 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 6),
+"y": 75,
+"id": 313,
+"title": $("<div/>").html("SUBJECT:  SAUDI ARABIA: 1989 ANNUAL TERRORISM REPORT, ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 9),
+"y": 75,
+"id": 394,
+"title": $("<div/>").html("SUBJECT:  TKFU01:  POSSIBLE U.S.-SAUDI AGREEMENT ON U.S. ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 9),
+"y": 75,
+"id": 395,
+"title": $("<div/>").html("SUBJECT:  FAHD OUT OF THE CLOSET ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 14),
+"y": 75,
+"id": 414,
+"title": $("<div/>").html("SUBJECT:  SAUDI ARABIA: 1990 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1991, 4, 6),
+"y": 75,
+"id": 450,
+"title": $("<div/>").html("SUBJECT:  THE SAUDI PRESS: PROFILES OF INDIVIDUAL PAPERS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 12, 8),
+"y": 76,
+"id": 247,
+"title": $("<div/>").html("SUBJECT: COLOMBIA: 1988 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1988, 12, 23),
+"y": 76,
+"id": 257,
+"title": $("<div/>").html("SUBJECT: COLOMBIA: ADDITIONS TO 1988 ANNUAL TERRORISM ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 16),
+"y": 76,
+"id": 320,
+"title": $("<div/>").html("SUBJECT: COLOMBIA: 1989 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 20),
+"y": 76,
+"id": 420,
+"title": $("<div/>").html("SUBJECT:  COLOMBIA: 1990 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1988, 12, 21),
+"y": 77,
+"id": 256,
+"title": $("<div/>").html("SUBJECT: HU JINTAO--A GLANCE AT HIS CHARACTER ").text(),
+},
+{
+"x": Date.UTC(1989, 4, 19),
+"y": 77,
+"id": 270,
+"title": $("<div/>").html("SUBJECT:  PRO-DEMOCRACY DEMONSTRATORS FLOOD TIANANMEN ").text(),
+},
+{
+"x": Date.UTC(1989, 5, 21),
+"y": 77,
+"id": 273,
+"title": $("<div/>").html("SUBJECT:  SITREP NO. 6:  THE SCENE ON TIANANMEN, THE ").text(),
+},
+{
+"x": Date.UTC(1989, 5, 21),
+"y": 77,
+"id": 274,
+"title": $("<div/>").html("SUBJECT:  SITREP NO. 8:  TIANANMEN SQUARE CROWDS GROW ").text(),
+},
+{
+"x": Date.UTC(1989, 5, 22),
+"y": 77,
+"id": 275,
+"title": $("<div/>").html("SUBJECT:  SITREP NO. 9:  TIANANMEN SQUARE ON MAY 22: ").text(),
+},
+{
+"x": Date.UTC(1989, 5, 22),
+"y": 77,
+"id": 276,
+"title": $("<div/>").html("SUBJECT:  SITREP NO. 10:  VIEW OF TIANANMEN SQUARE ").text(),
+},
+{
+"x": Date.UTC(1989, 6, 2),
+"y": 77,
+"id": 277,
+"title": $("<div/>").html("SUBJECT:  BACK TO SCHOOL -- NORTHEAST CHINA STREETS ARE ").text(),
+},
+{
+"x": Date.UTC(1989, 6, 3),
+"y": 77,
+"id": 279,
+"title": $("<div/>").html("SUBJECT:  SITREP NO. 29:  ARTICLE JUSTIFIES MARTIAL ").text(),
+},
+{
+"x": Date.UTC(1989, 6, 4),
+"y": 77,
+"id": 281,
+"title": $("<div/>").html("SUBJECT:  NORTHEAST CHINA STUDENTS REACT TO BEIJING ").text(),
+},
+{
+"x": Date.UTC(1989, 6, 5),
+"y": 77,
+"id": 282,
+"title": $("<div/>").html("SUBJECT: TAIWAN REACTIONS TO THE TIANANMEN MASSACRE ").text(),
+},
+{
+"x": Date.UTC(1990, 3, 26),
+"y": 77,
+"id": 353,
+"title": $("<div/>").html("SUBJ:  BLOOD AND BITTERNESS:  A SOLDIER\'S TALE OF TIANANMEN ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 1, 26),
+"y": 78,
+"id": 260,
+"title": $("<div/>").html("SUBJECT:  HUN SEN\'S VISIT ").text(),
+},
+{
+"x": Date.UTC(1989, 9, 26),
+"y": 78,
+"id": 295,
+"title": $("<div/>").html("SUBJECT:  U.S. POLICY TOWARD CAMBODIA: NEXT STEPS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 2, 1),
+"y": 79,
+"id": 262,
+"title": $("<div/>").html("SUBJECT:  TEHRAN SOCIAL AND POLITICAL SCENE ").text(),
+},
+{
+"x": Date.UTC(1989, 9, 27),
+"y": 79,
+"id": 296,
+"title": $("<div/>").html("SUBJECT:  LIBERALIZING SOCIAL CONDITIONS IN TEHRAN ").text(),
+},
+{
+"x": Date.UTC(1989, 10, 4),
+"y": 79,
+"id": 298,
+"title": $("<div/>").html("SUBJECT: LIFE IN TEHRAN ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 3, 14),
+"y": 80,
+"id": 265,
+"title": $("<div/>").html("SUBJECT:  EAST-WEST FIGHTING -- SITUATION AS OF 1200Z -- ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 4, 25),
+"y": 81,
+"id": 271,
+"title": $("<div/>").html("SUBJECT:  RAFSANJANI APRIL 21 SERMON ON ALLEGED ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 6, 3),
+"y": 82,
+"id": 278,
+"title": $("<div/>").html("SUBJECT:  SITREP NO. 28:  TEN TO FIFTEEN THOUSAND ").text(),
+},
+{
+"x": Date.UTC(1989, 6, 3),
+"y": 82,
+"id": 280,
+"title": $("<div/>").html("SUBJECT:  SITREP NO. 31:  TIANANMEN AT 0245 ON ").text(),
+},
+{
+"x": Date.UTC(1989, 6, 5),
+"y": 82,
+"id": 284,
+"title": $("<div/>").html("SUBJECT:  CHENGDU STALEMATE ").text(),
+},
+{
+"x": Date.UTC(1989, 7, 12),
+"y": 82,
+"id": 287,
+"title": $("<div/>").html("SUBJECT:  LATIN AMERICAN DIPLOMAT EYEWITNESS ACCOUNT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 8, 1),
+"y": 83,
+"id": 292,
+"title": $("<div/>").html("SUBJECT:  THE MERCHANT FAMILIES LOSE GROUND TO ").text(),
+},
+{
+"x": Date.UTC(1989, 11, 2),
+"y": 83,
+"id": 303,
+"title": $("<div/>").html("SUBJECT:  THE PRESS LORDS OF KUWAIT ").text(),
+},
+{
+"x": Date.UTC(1990, 2, 8),
+"y": 83,
+"id": 339,
+"title": $("<div/>").html("SUBJECT:  KUWAIT MFA OFFICIAL ON IRAN ").text(),
+},
+{
+"x": Date.UTC(1990, 7, 21),
+"y": 83,
+"id": 371,
+"title": $("<div/>").html("SUBJECT:  SADDAM\'S THREAT HELPS PULL KUWAITIS TOGETHER ").text(),
+},
+{
+"x": Date.UTC(1990, 7, 26),
+"y": 83,
+"id": 374,
+"title": $("<div/>").html("SUBJECT:  KUWAITIS CALM, CONFIDENT, AND UNIFIED (FOR THE ").text(),
+},
+{
+"x": Date.UTC(1990, 7, 31),
+"y": 83,
+"id": 377,
+"title": $("<div/>").html("SUBJECT:  KUWAITI CABINET REJECTS ARM-TWISTING AS ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 1),
+"y": 83,
+"id": 378,
+"title": $("<div/>").html("SUBJECT:  IRAQ/KUWAIT MEETING IN JEDDAH ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 21),
+"y": 83,
+"id": 397,
+"title": $("<div/>").html("SUBJECT:  TFKU01:  IRAQI BEHAVIOR IN KUWAIT ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 22),
+"y": 83,
+"id": 421,
+"title": $("<div/>").html("SUBJECT: KUWAITI SAUDI RELATIONS - A KUWAITI PERSPECTIVE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 8, 9),
+"y": 84,
+"id": 293,
+"title": $("<div/>").html("SUBJECT:  PRC GOALS AFTER TIANANMEN:  THE ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 15),
+"y": 84,
+"id": 478,
+"title": $("<div/>").html("SUBJECT:  CHINA: 1991 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 9, 20),
+"y": 85,
+"id": 294,
+"title": $("<div/>").html("SUBJECT: PRESS GUIDANCES - UTA CRASH/ANGOLA/SWAPO ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 10, 19),
+"y": 86,
+"id": 302,
+"title": $("<div/>").html("SUBJECT:  NIGERIA:  THE DYNAMICS OF PARTISAN POLITICS: ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 11, 15),
+"y": 87,
+"id": 306,
+"title": $("<div/>").html("SUBJ:  SUDAN:  1989 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 17),
+"y": 87,
+"id": 321,
+"title": $("<div/>").html("SUBJECT:  PAKISTAN: 1989 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1990, 10, 30),
+"y": 87,
+"id": 408,
+"title": $("<div/>").html("SUBJECT:  SUDAN:  1990 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 16),
+"y": 87,
+"id": 416,
+"title": $("<div/>").html("SUBJECT: PAKISTAN: 1990 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 19),
+"y": 87,
+"id": 419,
+"title": $("<div/>").html("SUBJECT:  INDONESIA:  1990 ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 16),
+"y": 87,
+"id": 480,
+"title": $("<div/>").html("SUBJECT:  ANNUAL TERRORISM REPORT FOR 1991:  INDONESIA ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 11, 19),
+"y": 88,
+"id": 308,
+"title": $("<div/>").html("SUBJECT:  GOS RELEASES SADIQ, MOHAMMED OSMAN AND TURABI ").text(),
+},
+{
+"x": Date.UTC(1990, 4, 1),
+"y": 88,
+"id": 355,
+"title": $("<div/>").html("SUBJECT: SUDAN AND THE ARABS:  POSSIBLY STEP-SISTERS; ").text(),
+},
+{
+"x": Date.UTC(1990, 5, 31),
+"y": 88,
+"id": 362,
+"title": $("<div/>").html("SUBJECT:  SUDAN\'S MILITARY ESTABLISHMENT:  MORE IN CHECK ").text(),
+},
+{
+"x": Date.UTC(1990, 7, 26),
+"y": 88,
+"id": 373,
+"title": $("<div/>").html("SUBJECT:  DIPLOMATS AGREE--BASHIR IS HERE TO STAY, IF NOT ").text(),
+},
+{
+"x": Date.UTC(1990, 10, 11),
+"y": 88,
+"id": 404,
+"title": $("<div/>").html("SUBJECT:  GOS COUNCIL REPUTEDLY SUPPORTS DISMANTLING ").text(),
+},
+{
+"x": Date.UTC(1990, 10, 23),
+"y": 88,
+"id": 405,
+"title": $("<div/>").html("SUBJECT:  QADHAFI VISITS SUDAN; CALLS FOR SUDAN, LIBYAN, ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 26),
+"y": 88,
+"id": 423,
+"title": $("<div/>").html("SUBJECT:  DEMARCHE TO GOS REGARDING INTELLIGENCE ").text(),
+},
+{
+"x": Date.UTC(1991, 5, 30),
+"y": 88,
+"id": 456,
+"title": $("<div/>").html("SUBJECT:  BASHIR AND THE RCC ON THE EVE OF THEIR SECOND ").text(),
+},
+{
+"x": Date.UTC(1991, 7, 2),
+"y": 88,
+"id": 461,
+"title": $("<div/>").html("SUBJECT:  BASHIR\'S SECOND ANNIVERSARY SPEECH:  HOT ").text(),
+},
+{
+"x": Date.UTC(1991, 7, 2),
+"y": 88,
+"id": 462,
+"title": $("<div/>").html("SUBJECT:  CONVERSATION WITH FORMER PM SADIQ AL MAHDI ").text(),
+},
+{
+"x": Date.UTC(1991, 9, 2),
+"y": 88,
+"id": 470,
+"title": $("<div/>").html("SUBJECT:  ISLAMIZATION OF SOUTHERN SUDAN ").text(),
+},
+{
+"x": Date.UTC(1991, 9, 29),
+"y": 88,
+"id": 471,
+"title": $("<div/>").html("SUBJECT:  ISLAMIZATION OF SOUTHERN SUDAN:  DESENSITIZED ").text(),
+},
+{
+"x": Date.UTC(1992, 3, 16),
+"y": 88,
+"id": 500,
+"title": $("<div/>").html("SUBJECT:  EMERGENCE OF BASHIR? - ROLE DEFINING IN THE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 11, 21),
+"y": 89,
+"id": 309,
+"title": $("<div/>").html("SUBJECT: DEMONSTRATIONS IN PRAGUE AND OTHER ").text(),
+},
+{
+"x": Date.UTC(1989, 11, 28),
+"y": 89,
+"id": 310,
+"title": $("<div/>").html("SUBJECT: LOCAL SOVIET VIEW OF CZECHOSLOVAK ").text(),
+},
+{
+"x": Date.UTC(1989, 11, 29),
+"y": 89,
+"id": 311,
+"title": $("<div/>").html("SUBJECT:  CZECHOSLOVAKIA\'S QUIET REVOLUTION AND ITS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 12, 13),
+"y": 90,
+"id": 317,
+"title": $("<div/>").html("SUBJECT:  PANAMANIANS HOPE FOR A SUCCESSFUL COUP ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 13),
+"y": 90,
+"id": 318,
+"title": $("<div/>").html("SUBJECT:  PANAMA HUMAN RIGHTS COMMITTEE APPEALS FOR ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 13),
+"y": 90,
+"id": 319,
+"title": $("<div/>").html("SUBJECT:  OPPOSITION ACTIVIST GIVES ACCOUNT OF ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 19),
+"y": 90,
+"id": 323,
+"title": $("<div/>").html("SUBJECT:  PANAMA: SHARING THE FACTS ON ATTACKS BY NORIEGA ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 20),
+"y": 90,
+"id": 324,
+"title": $("<div/>").html("SUBJECT:  TFPM02: PANAMA:  REQUEST FOR IMMEDIATE DEMARCHE ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 20),
+"y": 90,
+"id": 325,
+"title": $("<div/>").html("SUBJECT: TFPM02: MEETING WITH SC PRESIDENT ON PANAMA ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 21),
+"y": 90,
+"id": 326,
+"title": $("<div/>").html("SUBJECT: U.S. PRESENTS ITS CASE ON PANAMA TO THE ORGANIZATION OF ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 21),
+"y": 90,
+"id": 327,
+"title": $("<div/>").html("SUBJECT:  TF/PM02:  HISTORY OF DIPLOMATIC EFFORTS TO ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 21),
+"y": 90,
+"id": 328,
+"title": $("<div/>").html("SUBJECT: TFPM02:  SECURITY COUNCIL MEETING ON PANAMA ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 22),
+"y": 90,
+"id": 329,
+"title": $("<div/>").html("SUBJECT: OAS REGRETS U.S. ACTION: INDIVIDUAL COUNTRY REPORTS ").text(),
+},
+{
+"x": Date.UTC(1989, 12, 22),
+"y": 90,
+"id": 330,
+"title": $("<div/>").html("SUBJECT: OAS REGRETS U. S. ACTION ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1989, 12, 18),
+"y": 91,
+"id": 322,
+"title": $("<div/>").html("SUBJECT: THE SULTAN\'S NAME ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 2, 1),
+"y": 92,
+"id": 335,
+"title": $("<div/>").html("SUBJECT:  THE SECRETARY\'S MEETING WITH YAR PRESIDENT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 2, 3),
+"y": 93,
+"id": 337,
+"title": $("<div/>").html("SUBJECT:  IMPRESSIONS OF POLITICAL SITUATION IN ROMANIA ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 2, 5),
+"y": 94,
+"id": 338,
+"title": $("<div/>").html("SUBJECT:  RADICAL POLITICAL REFORM ON TAP AT CENTRAL COMMITTEE PLENUM ").text(),
+},
+{
+"x": Date.UTC(1991, 1, 3),
+"y": 94,
+"id": 440,
+"title": $("<div/>").html("SUBJECT:  TAKEOVER OF PRESS BUILDINGS IN RIGA AND VILNIUS ").text(),
+},
+{
+"x": Date.UTC(1991, 5, 21),
+"y": 94,
+"id": 454,
+"title": $("<div/>").html("SUBJECT:  ARMENIA PURSUES INDEPENDENCE ").text(),
+},
+{
+"x": Date.UTC(1991, 8, 30),
+"y": 94,
+"id": 468,
+"title": $("<div/>").html("SUBJECT: LENINGRAD\'S COMMUNISTS UNREPENTANT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 2, 13),
+"y": 95,
+"id": 342,
+"title": $("<div/>").html("SUBJECT:  MUTED SOVIET REACTION TO MANDELA\'S RELEASE ").text(),
+},
+{
+"x": Date.UTC(1990, 5, 3),
+"y": 95,
+"id": 359,
+"title": $("<div/>").html("SUBJECT: MANDELA REPORTED FURIOUS AT TOP ADVISER FOR ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 2, 21),
+"y": 96,
+"id": 345,
+"title": $("<div/>").html("SUBJECT: SOVIET AMBASSADOR IN KABUL REPORTEDLY ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 2, 21),
+"y": 97,
+"id": 347,
+"title": $("<div/>").html("SUBJ:  RIOTS IN TEHRAN ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 3, 13),
+"y": 98,
+"id": 351,
+"title": $("<div/>").html("SUBJECT:  PEACE BREAKING OUT IN THE NORTH? ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 5, 31),
+"y": 99,
+"id": 363,
+"title": $("<div/>").html("SUBJECT: BAGHDAD SUMMIT: THE MORNING AFTER ").text(),
+},
+{
+"x": Date.UTC(1990, 6, 7),
+"y": 99,
+"id": 366,
+"title": $("<div/>").html("SUBJECT: IRAN-IRAQ ").text(),
+},
+{
+"x": Date.UTC(1990, 6, 11),
+"y": 99,
+"id": 367,
+"title": $("<div/>").html("SUBJECT: COUP RUMORS: IRAQI EXILES AND IRAN FABRICATE ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 9),
+"y": 99,
+"id": 396,
+"title": $("<div/>").html("SUBJECT:  TFKU01: SIDEBAR TO HISTORY OF THE INVASION - AN ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 6, 7),
+"y": 100,
+"id": 365,
+"title": $("<div/>").html("SUBJECT: INTELLECTUAL LEADERSHIP ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 6, 28),
+"y": 101,
+"id": 368,
+"title": $("<div/>").html("SUBJECT:  BACKGROUND ON SAUDI VISITOR TARIQ BIN LADEN AND ").text(),
+},
+{
+"x": Date.UTC(1991, 2, 22),
+"y": 101,
+"id": 442,
+"title": $("<div/>").html("SUBJECT:  OVERVIEW OF SAUDI ARABIA\'S JIHAD CONVENTION ").text(),
+},
+{
+"x": Date.UTC(1991, 2, 24),
+"y": 101,
+"id": 444,
+"title": $("<div/>").html("SUBJECT:  ISLAM AT THE JIHAD CONVENTION ").text(),
+},
+{
+"x": Date.UTC(1991, 8, 31),
+"y": 101,
+"id": 469,
+"title": $("<div/>").html("SUBJECT:  PARTING BIO NOTES ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 7, 3),
+"y": 102,
+"id": 369,
+"title": $("<div/>").html("SUBJECT: PUBLIC IRAQI GESTURE TOWARD THE USG ").text(),
+},
+{
+"x": Date.UTC(1990, 7, 9),
+"y": 102,
+"id": 370,
+"title": $("<div/>").html("SUBJ:  SADDAM AND THE WESTERN MEDIA--CONTINUED ").text(),
+},
+{
+"x": Date.UTC(1990, 7, 25),
+"y": 102,
+"id": 372,
+"title": $("<div/>").html("SUBJECT: SADDAM\'S MESSAGE OF FRIENDSHIP TO PRESIDENT BUSH ").text(),
+},
+{
+"x": Date.UTC(1990, 7, 26),
+"y": 102,
+"id": 375,
+"title": $("<div/>").html("SUBJECT: IRAQ IS NOT BLINKING ").text(),
+},
+{
+"x": Date.UTC(1990, 7, 26),
+"y": 102,
+"id": 376,
+"title": $("<div/>").html("SUBJECT:  IRAQ BLINKS -- PROVISIONALLY ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 8, 2),
+"y": 103,
+"id": 379,
+"title": $("<div/>").html("SUBJECT: IRAQI INCURSION ACROSS KUWAITI BORDER ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 8, 2),
+"y": 104,
+"id": 380,
+"title": $("<div/>").html("SUBJECT:  TF2:  A/S KELLY MEETING WITH IRAQI AMBASSADOR ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 2),
+"y": 104,
+"id": 383,
+"title": $("<div/>").html("SUBJECT:  TFKI02:  SITREP NO. 1 : IRAQ/KUWAIT TASK FORCE ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 2),
+"y": 104,
+"id": 385,
+"title": $("<div/>").html("SUBJECT: UN SECURITY COUNCIL ADOPTS RESOLUTION ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 2),
+"y": 104,
+"id": 386,
+"title": $("<div/>").html("SUBJ:  TFK102:GOI OFFICIAL POSITION ON KUWAITI ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 3),
+"y": 104,
+"id": 387,
+"title": $("<div/>").html("SUBJECT:  TFKU01:  SITREP NO. 3: IRAQ/KUWAIT TASK FORCE: ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 3),
+"y": 104,
+"id": 388,
+"title": $("<div/>").html("SUBJECT:  TFKU01:  SITREP NO. 4: IRAQ/KUWAIT TASK FORCE: ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 3),
+"y": 104,
+"id": 389,
+"title": $("<div/>").html("SUBJECT:  TFKU01:  SITREP NO. 5: IRAQ/KUWAIT TASK FORCE: ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 3),
+"y": 104,
+"id": 390,
+"title": $("<div/>").html("SUBJECT:  TFKU01:  SITREP NO. 6: IRAQ/KUWAIT TASK FORCE: ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 4),
+"y": 104,
+"id": 391,
+"title": $("<div/>").html("SUBJECT:  KELLY DEMARCHE TO IRAQI AMBASSADOR ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 7),
+"y": 104,
+"id": 392,
+"title": $("<div/>").html("SUBJECT:  TFKU01: SITREP NO. 18,  IRAQ-KUWAIT TASK FORCE ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 7),
+"y": 104,
+"id": 393,
+"title": $("<div/>").html("SUBJECT:  TKFU01:  SITREP NO. 20 IRAQ-KUWAIT TASK FORCE, ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 25),
+"y": 104,
+"id": 399,
+"title": $("<div/>").html("None").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 8, 2),
+"y": 105,
+"id": 381,
+"title": $("<div/>").html("SUBJECT:  IRAQI INVASION OF KUWAIT ").text(),
+},
+{
+"x": Date.UTC(1990, 8, 2),
+"y": 105,
+"id": 382,
+"title": $("<div/>").html("SUBJECT:  TF1GEN:  BLOCKING IRAQI ASSETS AND PROTECTION ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 8, 24),
+"y": 106,
+"id": 398,
+"title": $("<div/>").html("SUBJECT:  WHITE PAPER ON LIBYAN SUPPORT FOR TERRORISM ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 8, 28),
+"y": 107,
+"id": 401,
+"title": $("<div/>").html("SUBJECT: TFKU01: CONTACT WITH KUWAITI RESISTANCE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 8, 28),
+"y": 108,
+"id": 402,
+"title": $("<div/>").html("SUBJECT: TFKU01: CHEESEBURGERS AS SYMBOLS OF RESISTANCE; WATER AS A ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 11, 4),
+"y": 109,
+"id": 410,
+"title": $("<div/>").html("SUBJECT:  ANNUAL TERRORISM REPORT ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 19),
+"y": 109,
+"id": 481,
+"title": $("<div/>").html("SUBJECT: MONGOLIA: 1991 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 11, 7),
+"y": 110,
+"id": 411,
+"title": $("<div/>").html("SUBJECT: 1990 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 11, 13),
+"y": 111,
+"id": 413,
+"title": $("<div/>").html("SUBJ:  NOVEMBER 11 MEETING WITH FOREIGN MINISTER ").text(),
+},
+{
+"x": Date.UTC(1990, 12, 17),
+"y": 111,
+"id": 431,
+"title": $("<div/>").html("SUBJECT:  CONSTITUTION DRAFTER DISILLUSIONED ").text(),
+},
+{
+"x": Date.UTC(1990, 12, 24),
+"y": 111,
+"id": 436,
+"title": $("<div/>").html("SUBJ:  DECEMBER 22, 1990 MEETING WITH THE PRIME MINISTER ").text(),
+},
+{
+"x": Date.UTC(1990, 12, 27),
+"y": 111,
+"id": 437,
+"title": $("<div/>").html("SUBJ: DECEMBER 27, 1990 MEETING WITH PRESIDENT SIAD BARRE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 11, 15),
+"y": 112,
+"id": 415,
+"title": $("<div/>").html("SUBJ:  BIOGRAPHIC REPORTING:  ABDIRAHMAN ABDULLE OSMAN ").text(),
+},
+{
+"x": Date.UTC(1990, 11, 29),
+"y": 112,
+"id": 425,
+"title": $("<div/>").html("SUBJECT: MOGADISHU MONTHLY BIOGRAPHIC WRAP-UP ").text(),
+},
+{
+"x": Date.UTC(1990, 12, 10),
+"y": 112,
+"id": 430,
+"title": $("<div/>").html("SUBJ:  DISCUSSION WITH GENERAL MOHAMED ALI SAMANTAR ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 11, 16),
+"y": 113,
+"id": 417,
+"title": $("<div/>").html("SUBJ: ETHIOPIA: 1990 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 11, 23),
+"y": 114,
+"id": 422,
+"title": $("<div/>").html("SUBJECT:  GHANA:1990 ANNUAL TERRORISM REPORT ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 11, 26),
+"y": 115,
+"id": 424,
+"title": $("<div/>").html("SUBJECT: NEW OPPOSITION GROUP APPEARS ").text(),
+},
+{
+"x": Date.UTC(1990, 12, 18),
+"y": 115,
+"id": 433,
+"title": $("<div/>").html("SUBJECT:  DISCUSSION WITH MANIFESTO SIGNERS ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 12, 5),
+"y": 116,
+"id": 428,
+"title": $("<div/>").html("SUBJECT:  SECURITY DECREE CALLS PARTS OF CONSTITUTION INTO QUESTION ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1990, 12, 9),
+"y": 117,
+"id": 429,
+"title": $("<div/>").html("SUBJECT:  MORE ON MASSACRE AT ANIMAL MARKET ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1991, 1, 2),
+"y": 118,
+"id": 438,
+"title": $("<div/>").html("SUBJECT:  ROLL OVER LENIN: KAZAN CATHEDRAL TO BE ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1991, 1, 3),
+"y": 119,
+"id": 439,
+"title": $("<div/>").html("SUBJECT:  BYELORUSSIAN GOVERNMENT THANKS PRESIDENT BUSH AND ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1991, 2, 23),
+"y": 120,
+"id": 443,
+"title": $("<div/>").html("SUBJECT:  FEB 23 TERRORIST INCIDENTS IN JAPAN ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1991, 3, 28),
+"y": 121,
+"id": 447,
+"title": $("<div/>").html("SUBJECT: MUSLIM BROTHERHOOD CALLS FOR WITHDRAWAL OF ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1991, 4, 10),
+"y": 122,
+"id": 451,
+"title": $("<div/>").html("SUBJECT:  GAMSAKHURDIA CONTINUES TO CHALLENGE MOSCOW ").text(),
+},
+{
+"x": Date.UTC(1991, 4, 16),
+"y": 122,
+"id": 452,
+"title": $("<div/>").html("SUBJECT:  BYZANTINE POLITICS THRIVE IN SOVIET GEORGIA ").text(),
+},
+{
+"x": Date.UTC(1991, 12, 13),
+"y": 122,
+"id": 487,
+"title": $("<div/>").html("SUBJECT:  GEORGIAN REPUBLIC\'S RELATIONS WITH MOSCOW ").text(),
+},
+{
+"x": Date.UTC(1991, 12, 28),
+"y": 122,
+"id": 488,
+"title": $("<div/>").html("SUBJECT:  U.S. POLICY ON RECOGNITION OF FORMER SOVIET ").text(),
+},
+{
+"x": Date.UTC(1991, 12, 30),
+"y": 122,
+"id": 489,
+"title": $("<div/>").html("SUBJECT:  GEORGIA -- DELIVERY OF LETTER ON ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1991, 8, 6),
+"y": 123,
+"id": 465,
+"title": $("<div/>").html("SUBJECT: WGYOOL:  RESOLUTIONS PASSED BY THE CROATIAN ").text(),
+},
+{
+"x": Date.UTC(1991, 8, 15),
+"y": 123,
+"id": 466,
+"title": $("<div/>").html("SUBJECT:  UNEMPLOYMENT UP SHARPLY IN JULY, BUT RISE OFFEST ").text(),
+},
+{
+"x": Date.UTC(1991, 10, 12),
+"y": 123,
+"id": 472,
+"title": $("<div/>").html("SUBJECT: CROATIAN FOREIGN MINISTER APPEALS TO UN ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 7),
+"y": 123,
+"id": 474,
+"title": $("<div/>").html("SUBJECT:  REPORTS OF THE EUROPEAN COMMUNITY ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 25),
+"y": 123,
+"id": 485,
+"title": $("<div/>").html("SUBJECT:  ZAGREB UPDATE, NOVEMBER 25, 1991 ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 26),
+"y": 123,
+"id": 486,
+"title": $("<div/>").html("SUBJECT:  ZAGREB UPDATE, NOVEMBER 26, 1991 ").text(),
+},
+{
+"x": Date.UTC(1992, 1, 16),
+"y": 123,
+"id": 492,
+"title": $("<div/>").html("SUBJECT:  TUDJMAN LETTER TO PRESIDENT OF THE WORLD ").text(),
+},
+{
+"x": Date.UTC(1992, 1, 30),
+"y": 123,
+"id": 495,
+"title": $("<div/>").html("SUBJECT: LETTER OF CROATIAN PRESIDENT FRANJO TUDJMAN ").text(),
+},
+{
+"x": Date.UTC(1992, 3, 13),
+"y": 123,
+"id": 499,
+"title": $("<div/>").html("SUBJECT:  ZAGREB UPDATE:  MARCH 3, 1992 ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1991, 8, 28),
+"y": 124,
+"id": 467,
+"title": $("<div/>").html("SUBJECT: JEDDAH\'S MERCHANT ELITE: THE ALIREZAS ").text(),
+},
+{
+"x": Date.UTC(1991, 11, 24),
+"y": 124,
+"id": 483,
+"title": $("<div/>").html("SUBJECT:  PRINCE SAUD AL-FAISAL CRITICIZES IRAN ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1992, 1, 2),
+"y": 125,
+"id": 491,
+"title": $("<div/>").html("SUBJECT: RETIREMENT OF FILES ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                        }
+                },
+                    
+                {
+                    type: "scatter",
+                    data: [
+                {
+"x": Date.UTC(1992, 1, 16),
+"y": 126,
+"id": 493,
+"title": $("<div/>").html("SUBJECT: PKK TERROR ATTACK IN MALATYA ").text(),
+},
+],
+                    marker: {
+                        radius: 4,
+                        symbol: "circle"
+                },
+                    },
+            ]
+            }
+            );
+            });
+            </script>
