@@ -2,7 +2,8 @@ import csv, math, numpy, string, sys, collections, time, calendar, re
 from gensim import corpora, models, similarities
 
 clusters = collections.defaultdict(list) #identify vectors by ids
-vector_dates = collections.defaultdict(int) #(vector id, date) pairs
+vector_dates = collections.defaultdict(list) #(vector id, date) pairs
+vector_epoch = collections.defaultdict(int)
 vector_subjects = collections.defaultdict(str) #(vector id, subject) pairs
 
 index = similarities.SparseMatrixSimilarity.load('sample2/tfidf.index')
@@ -37,22 +38,27 @@ def main():
             if row[0] != 'id':
                 i+=1
                 vector_dates[i] = get_date(row[1])
+                vector_epoch[i] = get_epoch(row[1])
                 vector_subjects[i] = get_subject(row[7])
     print "vector_dates, vector_subjects dictionaries populated."
     for vector in vector_dates:
         print "Processing vector " + str(vector)
         if clusters:
-            distance_dict = {}
-            for cluster in clusters: 
-                distance_dict[cluster] = cluster_similarity(vector,cluster)
-            most_similar = max(distance_dict.iterkeys(), key=lambda k: distance_dict[k])
-            highest_similarity = distance_dict[most_similar]
-            if highest_similarity > 0.11282315154: #DEFINE THIS between 0.6 and 0.8
-                update_cluster(vector,most_similar)
+            if select_clusters(vector):
+              distance_dict = {}
+              for cluster in select_clusters(vector): 
+                  distance_dict[cluster] = cluster_similarity(vector,cluster)
+              most_similar = max(distance_dict.iterkeys(), key=lambda k: distance_dict[k])
+              highest_similarity = distance_dict[most_similar]
+              if highest_similarity > 0.06660152732: #mean + std
+                  update_cluster(vector,most_similar)
+              else:
+                  new_cluster(vector)
             else:
                 new_cluster(vector)
         else:
             clusters[1] = [vector]
+            print "Cluster 1 created."
     with open('html/index.html', 'w') as output:
         output.write("""
 <!DOCTYPE html>
@@ -209,7 +215,6 @@ def main():
             );
             });
             </script>""")
-    print clusters
     return clusters
 
 def get_epoch(time_string):
@@ -245,15 +250,18 @@ def new_cluster(vector):
     clusters[last_cluster + 1] += [vector]
     print "Cluster " + str(last_cluster +1) + " created."
 
-def select_clusters():
+def select_clusters(vector):
+    cluster_list = []
     for cluster in clusters:
-        pass
-        #if age of cluster less than A, include
+        if vector_epoch[vector] - age(cluster) <= 31536000:
+          cluster_list.append(cluster)
+    return cluster_list
 
 def age(cluster):
     vector_list = clusters[cluster]
     last_vector = vector_list[-1]
-    last_updated = vector_dates[last_vector]
+    last_updated = vector_epoch[last_vector]
+    return last_updated
 
 if __name__ == "__main__": main()
 
