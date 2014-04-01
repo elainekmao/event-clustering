@@ -38,3 +38,5 @@ nosetests.xml
 #FILES
 *.csv
 filter-csv-by-terms.rb
+*.npy
+
