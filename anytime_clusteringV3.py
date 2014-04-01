@@ -3,6 +3,7 @@ from gensim import corpora, models, similarities
 
 clusters = collections.defaultdict(list) #identify vectors by ids
 vector_dates = collections.defaultdict(list) #(vector id, date) pairs
+vector_epoch = collections.defaultdict(int)
 vector_subjects = collections.defaultdict(str) #(vector id, subject) pairs
 
 index = similarities.SparseMatrixSimilarity.load('sample2/tfidf.index')
@@ -37,18 +38,22 @@ def main():
             if row[0] != 'id':
                 i+=1
                 vector_dates[i] = get_date(row[1])
+                vector_epoch[i] = get_epoch(row[1])
                 vector_subjects[i] = get_subject(row[7])
     print "vector_dates, vector_subjects dictionaries populated."
     for vector in vector_dates:
         print "Processing vector " + str(vector)
         if clusters:
-            distance_dict = {}
-            for cluster in select_clusters(vector): 
-                distance_dict[cluster] = cluster_similarity(vector,cluster)
-            most_similar = max(distance_dict.iterkeys(), key=lambda k: distance_dict[k])
-            highest_similarity = distance_dict[most_similar]
-            if highest_similarity > 0.06660152732: #mean + std
-                update_cluster(vector,most_similar)
+            if select_clusters(vector):
+              distance_dict = {}
+              for cluster in select_clusters(vector): 
+                  distance_dict[cluster] = cluster_similarity(vector,cluster)
+              most_similar = max(distance_dict.iterkeys(), key=lambda k: distance_dict[k])
+              highest_similarity = distance_dict[most_similar]
+              if highest_similarity > 0.06660152732: #mean + std
+                  update_cluster(vector,most_similar)
+              else:
+                  new_cluster(vector)
             else:
                 new_cluster(vector)
         else:
@@ -74,7 +79,7 @@ def main():
                   chart: {
                     backgroundColor: "#FFF",
                     spacingTop: 24,
-                    zoomType: "x",
+                    zoomType: "xy",
                     style: {
                       fontSize: 12,
                       fontFamily: 'sans-serif',
@@ -152,7 +157,7 @@ def main():
                         return [
                                 "<b>", this.point.id, "</b>", "<br>",
                                 this.point.title, "<br>", 
-                                "Cluster: ", this.point.y, "<br>", 
+                                "Cluster: ", this.point.cluster_id, "<br>", 
                                 "Date: ", Highcharts.dateFormat("%B %e %Y", this.point.x)
                                ].join("");
                     }
@@ -181,15 +186,17 @@ def main():
                     data: [
                 """)
             for document in clusters[cluster]:
-                output.write('{\n')
-                output.write('"x": Date.UTC' + str(vector_dates[document]) + ',\n')
-                output.write('"y": ' + str(cluster) + ',\n')
-                output.write('"id": ' + str(document) + ',\n')
-                output.write('"title": $("<div/>").html("' + str(vector_subjects[document]) + '").text(),\n')
-                output.write('},\n') 
-            output.write('],')
+                output.write('\t\t\t{\n')
+                output.write('\t\t\t"x": Date.UTC' + str(vector_dates[document]) + ',\n')
+                output.write('\t\t\t"y": ' + str(cluster) + ',\n')
+                output.write('\t\t\t"id": ' + str(document) + ',\n')
+                output.write('\t\t\t"cluster_id": ' + str(cluster) + ',\n')
+                output.write('\t\t\t"title": $("<div/>").html("' + str(vector_subjects[document]) + '").text(),\n')
+                output.write('\t\t\t},\n') 
+            output.write('\t\t],')
             if i != len(clusters):
                 output.write("""
+                    lineWidth: 1,
                     marker: {
                         radius: 4,
                         symbol: "circle"
@@ -198,6 +205,7 @@ def main():
                     """)
             else:
                 output.write("""
+                    lineWidth: 1,
                     marker: {
                         radius: 4,
                         symbol: "circle"
