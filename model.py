@@ -1,22 +1,22 @@
 import csv, math, string, sys
 from gensim import corpora, models, similarities
 
-corpus = corpora.MmCorpus('sample2/cables_corpus.mm')
-dictionary = corpora.Dictionary.load('sample2/cables.dict')
+corpus = corpora.MmCorpus('sample3/cables_corpus.mm')
+dictionary = corpora.Dictionary.load('sample3/cables.dict')
 print "Corpus loaded."
 
 tfidf = models.TfidfModel(corpus, normalize=True)
 tfidf_corpus = tfidf[corpus]
-tfidf_index = similarities.SparseMatrixSimilarity(tfidf[corpus], num_features=12297)
+tfidf_index = similarities.SparseMatrixSimilarity(tfidf[corpus], num_features=58672)
 
-tfidf.save('sample2/tfidf_model.tfidf')
-tfidf_index.save('sample2/tfidf.index')
+tfidf.save('sample3/tfidf_model.tfidf')
+tfidf_index.save('sample3/tfidf.index')
 print "TF-IDF model saved."
 
-for document in tfidf_corpus:
-    total_writer = csv.writer(open('tfidf.csv', 'a'))
-    total_writer.writerow(document)
-print "TF-IDF done."
+#for document in tfidf_corpus:
+#    total_writer = csv.writer(open('tfidf.csv', 'a'))
+#    total_writer.writerow(document)
+#print "TF-IDF done."
 
 #lsi = models.LsiModel(tfidf_corpus, id2word=dictionary, num_topics=300)
 #lsi_corpus = lsi[tfidf_corpus]

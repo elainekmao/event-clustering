@@ -1,36 +1,39 @@
 import csv, math, numpy, string, sys, collections, time, calendar, re
 from gensim import corpora, models, similarities
 
+csv.field_size_limit(1000000000)
+
 clusters = collections.defaultdict(list) #identify vectors by ids
 vector_dates = collections.defaultdict(list) #(vector id, date) pairs
 vector_subjects = collections.defaultdict(str) #(vector id, subject) pairs
+vector_snippets = collections.defaultdict(str) #(vector id, snippet) pairs
 
-index = similarities.SparseMatrixSimilarity.load('sample2/tfidf.index')
-corpus = corpora.MmCorpus.load('sample2/tfidf_model.tfidf')
+index = similarities.SparseMatrixSimilarity.load('sample3/tfidf.index')
+corpus = corpora.MmCorpus.load('sample3/tfidf_model.tfidf')
 sim = list(enumerate(index))
 print "Index loaded."
 
-matrix = []
-for row in sim:
-    matrix.append(row[1])
+#matrix = []
+#for row in sim:
+#    matrix.append(row[1])
 
-value_list = []
-for i in range(0,500):
-    for j in range(i,500):
-        if i!= j:
-            value = float(matrix[i][j])
-            value_list.append(value)
+#value_list = []
+#for i in range(0,500):
+#    for j in range(i,500):
+#        if i!= j:
+#            value = float(matrix[i][j])
+#            value_list.append(value)
 
-mean = numpy.average(value_list)
-median = numpy.median(value_list)
-std = numpy.std(value_list)
+#mean = numpy.average(value_list)
+#median = numpy.median(value_list)
+#std = numpy.std(value_list)
 
-print "Mean: " + str(mean)
-print "Median: " + str(median)
-print "Standard Deviation: " + str(std)
+#print "Mean: " + str(mean)
+#print "Median: " + str(median)
+#print "Standard Deviation: " + str(std)
 
 def main():
-    with open('sample2/sample.csv', 'rb') as csvfile:
+    with open('sample3/sample.csv', 'rb') as csvfile:
         f = csv.reader(csvfile, delimiter=',')
         i = 0
         for row in f:
@@ -38,23 +41,29 @@ def main():
                 i+=1
                 vector_dates[i] = get_date(row[1])
                 vector_subjects[i] = get_subject(row[7])
+                vector_snippets[i] = get_ten_lines(row[7])
     print "vector_dates, vector_subjects dictionaries populated."
+    outputcsv = csv.writer(open('vector_clusters_no_expiration.csv', 'w'))
     for vector in vector_dates:
         print "Processing vector " + str(vector)
         if clusters:
             distance_dict = {}
-            for cluster in select_clusters(vector): 
+            for cluster in clusters: 
                 distance_dict[cluster] = cluster_similarity(vector,cluster)
             most_similar = max(distance_dict.iterkeys(), key=lambda k: distance_dict[k])
             highest_similarity = distance_dict[most_similar]
             if highest_similarity > 0.06660152732: #mean + std
                 update_cluster(vector,most_similar)
+                outputcsv.writerow([vector, most_similar, vector_snippets[vector], 'www.columbia.edu/~ekm2133/' + str(vector) + '.html'])
             else:
                 new_cluster(vector)
+                cluster_id = clusters.keys()[-1] + 1
+                outputcsv.writerow([vector, cluster_id, vector_snippets[vector], 'www.columbia.edu/~ekm2133/' + str(vector) + '.html'])
         else:
             clusters[1] = [vector]
+            outputcsv.writerow([vector, 1, vector_snippets[vector], 'www.columbia.edu/~ekm2133/' + str(vector) + '.html'])
             print "Cluster 1 created."
-    with open('html/index.html', 'w') as output:
+    with open('html/index_no_age.html', 'w') as output:
         output.write("""
 <!DOCTYPE html>
 <html>
@@ -74,31 +83,13 @@ def main():
                   chart: {
                     backgroundColor: "#FFF",
                     spacingTop: 24,
-                    zoomType: "x",
+                    zoomType: "xy",
                     style: {
                       fontSize: 12,
                       fontFamily: 'sans-serif',
                       fontWeight: 300,
                     }
                   },
-                  navigation: {
-                    buttonOptions: {
-                      theme: {
-                        fill: '#333333',
-                        stroke: '#000',
-                        states: {
-                          hover: {
-                              fill: '#474747',
-                              stroke: '#333',
-                          },
-                          select: {
-                              fill: '#474747',
-                              stroke: '#333',
-                          }
-                        }
-                      }
-                    }
-                 },
                   yAxis: {
                     min: 0,
                     max: """ + str(len(clusters)) + """,
@@ -181,15 +172,16 @@ def main():
                     data: [
                 """)
             for document in clusters[cluster]:
-                output.write('{\n')
-                output.write('"x": Date.UTC' + str(vector_dates[document]) + ',\n')
-                output.write('"y": ' + str(cluster) + ',\n')
-                output.write('"id": ' + str(document) + ',\n')
-                output.write('"title": $("<div/>").html("' + str(vector_subjects[document]) + '").text(),\n')
-                output.write('},\n') 
-            output.write('],')
+                output.write('\t\t\t{\n')
+                output.write('\t\t\t"x": Date.UTC' + str(vector_dates[document]) + ',\n')
+                output.write('\t\t\t"y": ' + str(cluster) + ',\n')
+                output.write('\t\t\t"id": ' + str(document) + ',\n')
+                output.write('\t\t\t"title": $("<div/>").html("' + str(vector_subjects[document]) + '").text(),\n')
+                output.write('\t\t\t},\n') 
+            output.write('\t\t],')
             if i != len(clusters):
                 output.write("""
+                    lineWidth: 1,
                     marker: {
                         radius: 4,
                         symbol: "circle"
@@ -198,6 +190,7 @@ def main():
                     """)
             else:
                 output.write("""
+                    lineWidth: 1,
                     marker: {
                         radius: 4,
                         symbol: "circle"
@@ -212,9 +205,6 @@ def main():
             </script>""")
     return clusters
 
-def get_epoch(time_string):
-    return calendar.timegm(time.strptime(time_string, "%m/%d/%Y %H:%M"))
-
 def get_date(time_string):
     t = time.strptime(time_string, "%m/%d/%Y %H:%M")
     return (t[0], t[1], t[2])
@@ -225,6 +215,19 @@ def get_subject(text):
         matchObj = re.match( r'SUBJECT: (.*) .*|SUBJ: (.*) .*', line, re.M|re.I)
         if matchObj:
             return string.replace(matchObj.group(), '"', '')
+
+def get_ten_lines(text):
+    lines = text.split('\n')
+    i = 0
+    for line in lines:
+        i += 1
+        matchObj = re.match( r'SUBJECT: (.*) .*|SUBJ: (.*) .*', line, re.M|re.I)
+        if matchObj:
+            snippet = []
+            snippet.append(string.replace(matchObj.group(), '"', ''))
+            for line in lines[i:i+10]:
+                snippet.append(line)
+            return snippet
 
 def vector_similarity(i,j): #by IDs
     return sim[i-1][1][j-1]
@@ -244,19 +247,6 @@ def new_cluster(vector):
     last_cluster = clusters.keys()[-1]
     clusters[last_cluster + 1] += [vector]
     print "Cluster " + str(last_cluster +1) + " created."
-
-def select_clusters(vector):
-    cluster_list = []
-    for cluster in clusters:
-        if vector_epoch[vector] - age(cluster) <= 31536000:
-          cluster_list.append(cluster)
-    return cluster_list
-
-def age(cluster):
-    vector_list = clusters[cluster]
-    last_vector = vector_list[-1]
-    last_updated = vector_epoch[last_vector]
-    return last_updated
 
 if __name__ == "__main__": main()
 
