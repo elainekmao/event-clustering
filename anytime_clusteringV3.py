@@ -43,7 +43,7 @@ def main():
                 vector_dates[i] = get_date(row[1])
                 vector_epoch[i] = get_epoch(row[1])
                 vector_subjects[i] = get_subject(row[7])
-                vector_snippets[i] = get_ten_lines(row[7])
+                vector_snippets[i] = get_preview(row[7])
     print "vector_dates, vector_subjects dictionaries populated."
     outputcsv = csv.writer(open('vector_clusters_time.csv', 'w'))
     for vector in vector_dates:
@@ -57,18 +57,18 @@ def main():
               highest_similarity = distance_dict[most_similar]
               if highest_similarity > 0.0561431314: #mean + std
                   update_cluster(vector,most_similar)
-                  outputcsv.writerow([vector, most_similar, vector_snippets[vector], 'www.columbia.edu/~ekm2133/' + str(vector) + '.html'])
+                  outputcsv.writerow([vector, most_similar, vector_snippets[vector], 'https://rawgit.com/elainekmao/event-clustering/master/html/' + str(vector) + '.html'])
               else:
                   new_cluster(vector)
                   cluster_id = clusters.keys()[-1] + 1
-                  outputcsv.writerow([vector, cluster_id, vector_snippets[vector], 'www.columbia.edu/~ekm2133/' + str(vector) + '.html'])
+                  outputcsv.writerow([vector, cluster_id, vector_snippets[vector], 'https://rawgit.com/elainekmao/event-clustering/master/html/' + str(vector) + '.html'])
             else:
                 new_cluster(vector)
                 cluster_id = clusters.keys()[-1] + 1
-                outputcsv.writerow([vector, cluster_id, vector_snippets[vector], 'www.columbia.edu/~ekm2133/' + str(vector) + '.html'])
+                outputcsv.writerow([vector, cluster_id, vector_snippets[vector], 'https://rawgit.com/elainekmao/event-clustering/master/html/' + str(vector) + '.html'])
         else:
             clusters[1] = [vector]
-            outputcsv.writerow([vector, 1, vector_snippets[vector], 'www.columbia.edu/~ekm2133/' + str(vector) + '.html'])
+            outputcsv.writerow([vector, 1, vector_snippets[vector], 'https://rawgit.com/elainekmao/event-clustering/master/html/' + str(vector) + '.html'])
             print "Cluster 1 created."
     with open('sample3/index.html', 'w') as output:
         output.write("""
@@ -77,7 +77,7 @@ def main():
     <head>
       <title>WikiLeaks Event Detection</title>
         <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="js/highcharts.js"></script>
+        <script src="js/highstock.js"></script>
         <link rel="stylesheet" href="css/bootstrap.min.css">
 
         <body>
@@ -88,6 +88,7 @@ def main():
             $(function () {
               $('#graph').highcharts({
                   chart: {
+                    height: 700,
                     backgroundColor: "#FFF",
                     spacingTop: 24,
                     zoomType: "xy",
@@ -127,7 +128,8 @@ def main():
                       style: {
                         color: "#999",
                       }
-                    }
+                    },
+                    max: 10
                   },
                   title: {
                     text: $('<div/>').html('WikiLeaks Cables').text(),
@@ -136,6 +138,9 @@ def main():
                       font: 'sans-serif',
                       fontWeight: 300,
                     }
+                  },
+                  scrollbar: {
+                    enabled: true
                   },
                   legend: {
                     enabled: false
@@ -156,6 +161,7 @@ def main():
                     }
                   },
                   plotOptions: {
+                    turboThreshold: 10000,
                     scatter: {
                       cursor: 'pointer',
                       point: {
@@ -227,17 +233,21 @@ def get_subject(text):
         if matchObj:
             return string.replace(matchObj.group(), '"', '')
 
-def get_ten_lines(text):
+def get_preview(text):
     lines = text.split('\n')
     i = 0
     for line in lines:
         i += 1
         matchObj = re.match( r'SUBJECT: (.*) .*|SUBJ: (.*) .*', line, re.M|re.I)
         if matchObj:
-            snippet = []
-            snippet.append('<p>' + string.replace(matchObj.group(), '"', '') + '</p>')
-            for line in lines[i:i+10]:
-                snippet.append('<p>' + line + '</p>')
+            snippet = ''
+            snippet += '<p>' + string.replace(matchObj.group(), '"', '') + '</p>'
+            for line in lines[i:i+5]:
+                matchObj = re.match( r'REF: (.*) .*|1. (.*) .*|REFS: (.*) .*', line, re.M|re.I)
+                if matchObj:
+                    break
+                elif line.strip():
+                    snippet += '<p>' + line + '</p>'
             return snippet
 
 def vector_similarity(i,j): #by IDs

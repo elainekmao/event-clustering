@@ -18,6 +18,8 @@ def main(document):
                 origin_tag = get_origin_token(row[3])
                 document.append(origin_tag)
                 document.append(origin_tag)
+                document.append(origin_tag)
+                document.append(origin_tag)
                 texts.append(document)
         print "Done compiling texts."
 
@@ -25,7 +27,7 @@ def main(document):
     once_ids = [tokenid for tokenid, docfreq in dictionary.dfs.iteritems() if docfreq == 1]
     dictionary.filter_tokens(once_ids)
     dictionary.compactify()
-    dictionary.save('sample3/cables.dict')
+    dictionary.save('sample4/cables.dict')
     print dictionary
 
     dict_list = []
@@ -33,12 +35,12 @@ def main(document):
     values = dictionary.token2id.values()
     for item in range(0, len(dictionary)):
         dict_list.append([values[item], keys[item]])
-    docwriter = csv.writer(open("sample3/cablesdictionary.csv", "wb"))
+    docwriter = csv.writer(open("sample4/cablesdictionary.csv", "wb"))
     docwriter.writerows(dict_list)
     print "CSV written."
 
     corpus = [dictionary.doc2bow(text) for text in texts]
-    corpora.MmCorpus.serialize('sample3/cables_corpus.mm', corpus)
+    corpora.MmCorpus.serialize('sample4/cables_corpus.mm', corpus)
 
 def get_origin_token (text):
     token = ''
