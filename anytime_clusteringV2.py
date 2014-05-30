@@ -232,7 +232,7 @@ def get_preview(text):
             snippet = ''
             snippet += '<p>' + string.replace(matchObj.group(), '"', '') + '</p>'
             for line in lines[i:i+5]:
-                matchObj = re.match( r'REF: (.*) .*|1. (.*) .*', line, re.M|re.I)
+                matchObj = re.match( r'REF: (.*) .*|1\. (.*) .*|REFS: (.*) .*', line, re.M|re.I)
                 if matchObj:
                     break
                 elif line.strip():
